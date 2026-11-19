@@ -1,0 +1,2052 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Arsitek & Surveyor Nusantara | Perbandingan Trigonometri Kelas X</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts: Plus Jakarta Sans & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- Font Awesome untuk Ikon -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <!-- Tone.js untuk Efek Suara Interaktif Tanpa URL Eksternal -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js"></script>
+
+  <style>
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: #f0f7ff;
+      background-image: 
+        radial-gradient(#cbd5e1 1px, transparent 1px),
+        radial-gradient(#e2e8f0 1px, #f0f7ff 1px);
+      background-size: 32px 32px;
+      background-position: 0 0, 16px 16px;
+      color: #0f172a;
+      overflow-x: hidden;
+    }
+
+    .font-mono-math {
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* Animasi Transisi & Efek Mengambang */
+    @keyframes floatSlow {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-6px); }
+    }
+    .animate-float {
+      animation: floatSlow 3.5s ease-in-out infinite;
+    }
+
+    @keyframes pulseGlow {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(14, 165, 233, 0.4); }
+      50% { box-shadow: 0 0 0 10px rgba(14, 165, 233, 0); }
+    }
+    .btn-pulse {
+      animation: pulseGlow 2.5s infinite;
+    }
+
+    /* Styling Tombol Game 3D / Taktil */
+    .btn-game {
+      transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 4px 0 rgba(15, 23, 42, 0.18);
+    }
+    .btn-game:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 0 rgba(15, 23, 42, 0.2);
+    }
+    .btn-game:active:not(:disabled) {
+      transform: translateY(2px);
+      box-shadow: 0 1px 0 rgba(15, 23, 42, 0.2);
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #e2e8f0;
+      border-radius: 999px;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #94a3b8;
+      border-radius: 999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #64748b;
+    }
+
+    /* Styling Input Range Slider */
+    input[type=range] {
+      -webkit-appearance: none;
+      background: transparent;
+    }
+    input[type=range]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      height: 22px;
+      width: 22px;
+      border-radius: 50%;
+      background: #0284c7;
+      border: 3px solid #ffffff;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+      cursor: pointer;
+      margin-top: -8px;
+    }
+    input[type=range]::-webkit-slider-runnable-track {
+      width: 100%;
+      height: 6px;
+      cursor: pointer;
+      background: #bae6fd;
+      border-radius: 999px;
+    }
+
+    /* Sertifikat Print/Export Styling */
+    .certificate-border {
+      background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+      border: 8px double #0284c7;
+      box-shadow: 0 20px 40px -15px rgba(2, 132, 199, 0.25);
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+  <!-- ==================== NAVBAR / HUD ATAS ==================== -->
+  <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-sky-100 shadow-sm">
+    <div class="max-w-7xl mx-auto px-3 sm:px-6 py-2.5 flex flex-wrap items-center justify-between gap-2">
+      <!-- Logo & Identitas Game -->
+      <div class="flex items-center gap-2.5 cursor-pointer" onclick="app.goHome()">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-sky-500 to-indigo-600 flex items-center justify-center text-white shadow-md">
+          <i class="fa-solid fa-compass-drafting text-lg"></i>
+        </div>
+        <div>
+          <h1 class="font-extrabold text-sm sm:text-base text-slate-800 leading-tight">Arsitek & Surveyor Nusantara</h1>
+          <p class="text-[11px] sm:text-xs text-sky-600 font-semibold">Matematika Kelas X • Perbandingan Trigonometri</p>
+        </div>
+      </div>
+
+      <!-- Status Gamifikasi & Alat Bantu Scaffolding -->
+      <div class="flex items-center gap-2 sm:gap-3">
+        <!-- Poin XP -->
+        <div class="flex items-center gap-1.5 bg-amber-50 border border-amber-200 px-3 py-1.5 rounded-full">
+          <i class="fa-solid fa-star text-amber-500 text-sm"></i>
+          <span id="hud-xp" class="font-bold text-xs sm:text-sm text-amber-800">0 XP</span>
+        </div>
+
+        <!-- Lencana Counter -->
+        <button onclick="app.toggleModal('modal-badges')" class="flex items-center gap-1.5 bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 px-3 py-1.5 rounded-full transition" title="Lihat Lencana">
+          <i class="fa-solid fa-medal text-emerald-600 text-sm"></i>
+          <span id="hud-badges" class="font-bold text-xs sm:text-sm text-emerald-800">0/4</span>
+        </button>
+
+        <!-- Tombol Rumus & Konsep (Scaffolding) -->
+        <button onclick="app.toggleModal('modal-formula')" class="btn-game flex items-center gap-1.5 bg-sky-600 hover:bg-sky-700 text-white px-3 py-1.5 rounded-xl text-xs sm:text-sm font-bold">
+          <i class="fa-solid fa-book-open"></i>
+          <span class="hidden md:inline">Rumus & Konsep</span>
+        </button>
+
+        <!-- Tombol Kalkulator Trigonometri Mini -->
+        <button onclick="app.toggleModal('modal-calc')" class="btn-game flex items-center gap-1.5 bg-indigo-600 hover:bg-indigo-700 text-white px-3 py-1.5 rounded-xl text-xs sm:text-sm font-bold">
+          <i class="fa-solid fa-calculator"></i>
+          <span class="hidden md:inline">Kalkulator Trig</span>
+        </button>
+
+        <!-- Tombol Suara -->
+        <button id="btn-sound" onclick="app.toggleSound()" class="w-9 h-9 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-600 flex items-center justify-center transition" title="Aktifkan/Matikan Suara">
+          <i class="fa-solid fa-volume-high text-sm"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Bilah Progres Siklus Deep Learning -->
+    <div class="bg-slate-50 border-t border-slate-100 px-3 sm:px-6 py-2">
+      <div class="max-w-5xl mx-auto">
+        <div class="flex items-center justify-between text-[11px] sm:text-xs font-bold text-slate-500 mb-1">
+          <span id="progress-label">Peta Misi Ekspedisi Nusantara</span>
+          <span id="progress-percent">0% Selesai</span>
+        </div>
+        <div class="w-full h-2.5 bg-slate-200 rounded-full overflow-hidden flex">
+          <div id="progress-bar" class="h-full bg-gradient-to-r from-sky-500 via-teal-500 to-emerald-500 transition-all duration-500 rounded-full" style="width: 0%"></div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ==================== KONTEN UTAMA DINAMIS ==================== -->
+  <main id="main-container" class="flex-1 max-w-6xl w-full mx-auto px-3 sm:px-6 py-6">
+    <!-- Konten dirender secara dinamis oleh JavaScript -->
+  </main>
+
+  <!-- ==================== MODAL 1: BUKU SAKU RUMUS & KONSEP (SCAFFOLDING) ==================== -->
+  <div id="modal-formula" class="fixed inset-0 z-50 hidden bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4">
+    <div class="bg-white rounded-3xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl border border-sky-100 p-5 sm:p-7">
+      <div class="flex items-center justify-between border-b border-slate-100 pb-4 mb-5">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-sky-100 text-sky-600 flex items-center justify-center text-lg">
+            <i class="fa-solid fa-compass"></i>
+          </div>
+          <div>
+            <h3 class="font-extrabold text-lg text-slate-800">Buku Saku Surveyor Nusantara</h3>
+            <p class="text-xs text-slate-500">Panduan Konsep & Rasio Segitiga Siku-Siku</p>
+          </div>
+        </div>
+        <button onclick="app.toggleModal('modal-formula')" class="w-9 h-9 rounded-full bg-slate-100 hover:bg-rose-100 hover:text-rose-600 flex items-center justify-center transition">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <!-- Penjelasan Segitiga Siku-siku -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 items-center bg-sky-50/70 rounded-2xl p-4 border border-sky-100 mb-5">
+        <div class="flex justify-center">
+          <svg viewBox="0 0 240 180" class="w-full max-w-[220px] h-auto">
+            <!-- Segitiga -->
+            <polygon points="35,145 195,145 195,35" fill="#e0f2fe" stroke="#0284c7" stroke-width="3" stroke-linejoin="round"/>
+            <!-- Tanda Siku-siku -->
+            <polyline points="178,145 178,128 195,128" fill="none" stroke="#0f172a" stroke-width="2"/>
+            <!-- Busur Sudut Theta -->
+            <path d="M 70,145 A 35,35 0 0,0 63,125" fill="none" stroke="#e11d48" stroke-width="2.5"/>
+            <text x="76" y="137" fill="#e11d48" font-weight="bold" font-size="14">θ</text>
+            <!-- Label Sisi -->
+            <text x="115" y="165" text-anchor="middle" fill="#0d9488" font-weight="bold" font-size="12">Samping (Sa)</text>
+            <text x="203" y="95" fill="#e11d48" font-weight="bold" font-size="12">Depan</text>
+            <text x="203" y="109" fill="#e11d48" font-weight="bold" font-size="12">(De)</text>
+            <text x="102" y="78" text-anchor="middle" fill="#4f46e5" font-weight="bold" font-size="12" transform="rotate(-34 102,78)">Miring (Mi)</text>
+          </svg>
+        </div>
+        <div class="space-y-2.5 text-sm">
+          <div class="p-2.5 rounded-xl bg-white border border-rose-100">
+            <span class="font-extrabold text-rose-600">Sinus (sin θ)</span> = <span class="font-mono-math font-bold">Depan / Miring</span>
+            <p class="text-xs text-slate-500 mt-0.5">Jembatan keledai: <b>Sin-De-Mi</b></p>
+          </div>
+          <div class="p-2.5 rounded-xl bg-white border border-teal-100">
+            <span class="font-extrabold text-teal-600">Cosinus (cos θ)</span> = <span class="font-mono-math font-bold">Samping / Miring</span>
+            <p class="text-xs text-slate-500 mt-0.5">Jembatan keledai: <b>Cos-Sa-Mi</b></p>
+          </div>
+          <div class="p-2.5 rounded-xl bg-white border border-indigo-100">
+            <span class="font-extrabold text-indigo-600">Tangen (tan θ)</span> = <span class="font-mono-math font-bold">Depan / Samping</span>
+            <p class="text-xs text-slate-500 mt-0.5">Jembatan keledai: <b>Tan-De-Sa</b></p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tabel Sudut Istimewa -->
+      <h4 class="font-bold text-slate-800 text-sm mb-2.5 flex items-center gap-2">
+        <i class="fa-solid fa-table text-amber-500"></i> Tabel Nilai Eksak Sudut Istimewa
+      </h4>
+      <div class="overflow-x-auto rounded-2xl border border-slate-200 mb-4">
+        <table class="w-full text-center text-xs sm:text-sm">
+          <thead class="bg-slate-800 text-white">
+            <tr>
+              <th class="py-2.5 px-3">Rasio</th>
+              <th class="py-2.5 px-3">0°</th>
+              <th class="py-2.5 px-3 bg-sky-700">30°</th>
+              <th class="py-2.5 px-3 bg-sky-700">45°</th>
+              <th class="py-2.5 px-3 bg-sky-700">60°</th>
+              <th class="py-2.5 px-3">90°</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-200 font-mono-math font-semibold">
+            <tr class="bg-white">
+              <td class="py-2.5 px-3 font-sans font-bold text-rose-600">sin θ</td>
+              <td class="py-2.5 px-3">0</td>
+              <td class="py-2.5 px-3 bg-sky-50">1/2</td>
+              <td class="py-2.5 px-3 bg-sky-50">1/2 √2</td>
+              <td class="py-2.5 px-3 bg-sky-50">1/2 √3</td>
+              <td class="py-2.5 px-3">1</td>
+            </tr>
+            <tr class="bg-slate-50">
+              <td class="py-2.5 px-3 font-sans font-bold text-teal-600">cos θ</td>
+              <td class="py-2.5 px-3">1</td>
+              <td class="py-2.5 px-3 bg-sky-50">1/2 √3</td>
+              <td class="py-2.5 px-3 bg-sky-50">1/2 √2</td>
+              <td class="py-2.5 px-3 bg-sky-50">1/2</td>
+              <td class="py-2.5 px-3">0</td>
+            </tr>
+            <tr class="bg-white">
+              <td class="py-2.5 px-3 font-sans font-bold text-indigo-600">tan θ</td>
+              <td class="py-2.5 px-3">0</td>
+              <td class="py-2.5 px-3 bg-sky-50">1/3 √3</td>
+              <td class="py-2.5 px-3 bg-sky-50">1</td>
+              <td class="py-2.5 px-3 bg-sky-50">√3</td>
+              <td class="py-2.5 px-3 text-slate-400">Tak Terdefinisi</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="bg-amber-50 border border-amber-200 rounded-xl p-3 text-xs text-amber-900 flex items-start gap-2.5">
+        <i class="fa-solid fa-lightbulb text-amber-500 text-base mt-0.5"></i>
+        <p><b>Tips Penting Surveyor:</b> Sisi <b>Miring (Hipotenusa)</b> selalu berada di seberang sudut siku-siku (90°) dan merupakan sisi terpanjang. Sementara posisi sisi <b>Depan</b> dan <b>Samping</b> selalu bergantung pada di mana sudut referensi <b>θ</b> berada!</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== MODAL 2: KALKULATOR TRIGONOMETRI MINI ==================== -->
+  <div id="modal-calc" class="fixed inset-0 z-50 hidden bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4">
+    <div class="bg-white rounded-3xl max-w-md w-full shadow-2xl border border-indigo-100 p-5 sm:p-6">
+      <div class="flex items-center justify-between border-b border-slate-100 pb-3.5 mb-4">
+        <div class="flex items-center gap-2.5">
+          <div class="w-9 h-9 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center">
+            <i class="fa-solid fa-calculator"></i>
+          </div>
+          <div>
+            <h3 class="font-extrabold text-base text-slate-800">Kalkulator Teodolit Mini</h3>
+            <p class="text-[11px] text-slate-500">Mode Derajat (DEG) Otomatis</p>
+          </div>
+        </div>
+        <button onclick="app.toggleModal('modal-calc')" class="w-8 h-8 rounded-full bg-slate-100 hover:bg-rose-100 hover:text-rose-600 flex items-center justify-center">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <div class="space-y-4">
+        <div>
+          <label class="block text-xs font-bold text-slate-600 mb-1">Masukkan Besar Sudut θ (0° – 89°):</label>
+          <div class="flex gap-2">
+            <input type="number" id="calc-angle-input" value="31" min="0" max="89.9" step="0.1"
+              oninput="app.updateMiniCalc()"
+              class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 font-mono-math font-bold text-lg text-slate-800 focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+            <span class="px-3.5 py-2.5 rounded-xl bg-slate-100 font-bold text-slate-600 flex items-center">Derajat</span>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-3 gap-2.5 text-center">
+          <div class="bg-rose-50 border border-rose-200 rounded-2xl p-3">
+            <div class="text-xs font-bold text-rose-600 mb-1">sin(θ)</div>
+            <div id="calc-sin-val" class="font-mono-math font-extrabold text-base text-slate-800">0.5150</div>
+          </div>
+          <div class="bg-teal-50 border border-teal-200 rounded-2xl p-3">
+            <div class="text-xs font-bold text-teal-600 mb-1">cos(θ)</div>
+            <div id="calc-cos-val" class="font-mono-math font-extrabold text-base text-slate-800">0.8572</div>
+          </div>
+          <div class="bg-indigo-50 border border-indigo-200 rounded-2xl p-3">
+            <div class="text-xs font-bold text-indigo-600 mb-1">tan(θ)</div>
+            <div id="calc-tan-val" class="font-mono-math font-extrabold text-base text-slate-800">0.6009</div>
+          </div>
+        </div>
+
+        <!-- Alat Hitung Perkalian Cepat -->
+        <div class="bg-slate-50 rounded-2xl p-3.5 border border-slate-200">
+          <p class="text-xs font-bold text-slate-600 mb-2">Bantu Hitung Sisi (Panjang × Rasio):</p>
+          <div class="flex items-center gap-2">
+            <input type="number" id="calc-mult-num" value="400" oninput="app.updateMiniCalc()" class="w-24 px-2.5 py-1.5 rounded-lg border border-slate-300 font-mono-math text-sm font-bold" />
+            <span class="text-slate-500 font-bold">×</span>
+            <select id="calc-mult-fn" onchange="app.updateMiniCalc()" class="px-2.5 py-1.5 rounded-lg border border-slate-300 text-sm font-bold bg-white">
+              <option value="tan">tan(θ)</option>
+              <option value="sin">sin(θ)</option>
+              <option value="cos">cos(θ)</option>
+            </select>
+            <span class="text-slate-500 font-bold">=</span>
+            <div id="calc-mult-res" class="flex-1 text-right font-mono-math font-extrabold text-indigo-700 text-base">240.34</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== MODAL 3: KOLEKSI LENCANA (BADGES) ==================== -->
+  <div id="modal-badges" class="fixed inset-0 z-50 hidden bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4">
+    <div class="bg-white rounded-3xl max-w-lg w-full shadow-2xl border border-emerald-100 p-5 sm:p-6">
+      <div class="flex items-center justify-between border-b border-slate-100 pb-3.5 mb-4">
+        <div class="flex items-center gap-2.5">
+          <div class="w-9 h-9 rounded-xl bg-emerald-100 text-emerald-600 flex items-center justify-center">
+            <i class="fa-solid fa-award"></i>
+          </div>
+          <div>
+            <h3 class="font-extrabold text-base text-slate-800">Lencana Kehormatan Surveyor</h3>
+            <p class="text-[11px] text-slate-500">Kumpulkan semua lencana dari tiap misi!</p>
+          </div>
+        </div>
+        <button onclick="app.toggleModal('modal-badges')" class="w-8 h-8 rounded-full bg-slate-100 hover:bg-rose-100 hover:text-rose-600 flex items-center justify-center">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+      <div id="badges-list-container" class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        <!-- Dirender JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== MODAL NOTIFIKASI / UMPAN BALIK MENDALAM ==================== -->
+  <div id="modal-feedback" class="fixed inset-0 z-50 hidden bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4">
+    <div class="bg-white rounded-3xl max-w-lg w-full shadow-2xl p-6 border-2 border-slate-100 transform transition-all">
+      <div id="feedback-icon-wrap" class="w-16 h-16 rounded-2xl mx-auto mb-4 flex items-center justify-center text-3xl"></div>
+      <h3 id="feedback-title" class="text-xl font-extrabold text-center text-slate-800 mb-2"></h3>
+      <div id="feedback-body" class="text-sm text-slate-600 leading-relaxed bg-slate-50 p-4 rounded-2xl border border-slate-200 mb-5"></div>
+      <button id="feedback-btn" onclick="app.closeFeedback()" class="btn-game w-full py-3 rounded-xl font-extrabold text-white text-sm tracking-wide">
+        Lanjutkan
+      </button>
+    </div>
+  </div>
+
+  <!-- ==================== SCRIPT UTAMA GAME ==================== -->
+  <script>
+    /**
+     * Utilitas Matematika Akurat (Konversi Derajat <-> Radian)
+     */
+    const MathTrig = {
+      toRad: (deg) => (deg * Math.PI) / 180,
+      toDeg: (rad) => (rad * 180) / Math.PI,
+      sin: (deg) => Math.sin((deg * Math.PI) / 180),
+      cos: (deg) => Math.cos((deg * Math.PI) / 180),
+      tan: (deg) => Math.tan((deg * Math.PI) / 180),
+      round: (num, dec = 2) => Math.round(num * Math.pow(10, dec)) / Math.pow(10, dec)
+    };
+
+    /**
+     * Sistem Efek Suara Web Audio API (Tone.js) Tanpa Eksternal URL
+     */
+    const SoundFX = {
+      enabled: true,
+      synth: null,
+      init() {
+        if (!this.synth && typeof Tone !== 'undefined') {
+          this.synth = new Tone.PolySynth(Tone.Synth).toDestination();
+          this.synth.volume.value = -10;
+        }
+      },
+      play(type) {
+        if (!this.enabled) return;
+        try {
+          if (Tone.context.state !== 'running') Tone.start();
+          this.init();
+          if (!this.synth) return;
+          const now = Tone.now();
+          if (type === 'click') {
+            this.synth.triggerAttackRelease('C5', '32n', now);
+          } else if (type === 'success') {
+            this.synth.triggerAttackRelease(['C5', 'E5', 'G5'], '16n', now);
+            this.synth.triggerAttackRelease('C6', '8n', now + 0.15);
+          } else if (type === 'error') {
+            this.synth.triggerAttackRelease(['E3', 'Bb2'], '8n', now);
+          } else if (type === 'badge') {
+            this.synth.triggerAttackRelease(['G4', 'B4', 'D5', 'G5'], '12n', now);
+          }
+        } catch (e) {
+          // Abaikan jika browser memblokir autoplay sebelum interaksi pertama
+        }
+      }
+    };
+
+    /**
+     * State & Logika Utama Aplikasi Game "Arsitek & Surveyor Nusantara"
+     */
+    const app = {
+      // TEMPATKAN URL WEB APP GOOGLE APPS SCRIPT ANDA DI BAWAH INI:
+      APPS_SCRIPT_URL: 'https://script.google.com/macros/s/AKfycbwaYwazFz5CqlczH4uKgVgfl9V2xoI7WPBAOF6jSbsTC3q4QFz-jV4BW5fhTdr89J7y-Q/exec',
+
+      state: {
+        playerName: 'Surveyor Muda',
+        currentScreen: 'home', // 'home', 'm1', 'm2', 'm3', 'm4'
+        xp: 0,
+        completedMissions: {
+          m1: false,
+          m2: false,
+          m3: false,
+          m4: false
+        },
+        badges: {
+          kalibrator: { earned: false, title: 'Kalibrator Andal', desc: 'Menguasai identifikasi sisi Depan, Samping, dan Miring pada berbagai orientasi segitiga.', icon: 'fa-compass-drafting', color: 'sky' },
+          sudutIstimewa: { earned: false, title: 'Ahli Sudut Istimewa', desc: 'Memahami prinsip kesebangunan rasio konstan dan nilai eksak 30°, 45°, 60°.', icon: 'fa-sun', color: 'amber' },
+          masterKlinometer: { earned: false, title: 'Master Klinometer', desc: 'Berhasil memecahkan 3 studi kasus pengukuran lapangan di Nusantara.', icon: 'fa-mountain-sun', color: 'teal' },
+          arsitekReflektif: { earned: false, title: 'Arsitek Reflektif', desc: 'Menuntaskan siklus Deep Learning dan meraih Sertifikat Surveyor Nusantara.', icon: 'fa-award', color: 'indigo' }
+        },
+        // State Misi 1: Kalibrasi Teodolit
+        m1: {
+          step: 0,
+          selectedSide: null, // 'depan', 'samping', 'miring'
+          assignments: { bottom: null, right: null, hyp: null },
+          questions: [
+            {
+              title: 'Kalibrasi 1: Posisi Standar Teodolit',
+              desc: 'Sudut elevasi θ berada di pojok kiri bawah. Tentukan label yang tepat untuk ketiga sisi segitiga siku-siku ini!',
+              rotation: 0,
+              thetaPos: 'bottom-left', // sudut lancip 1
+              targetLabels: { bottom: 'Samping', vertical: 'Depan', hyp: 'Miring' },
+              hint: 'Sudut θ berada di kiri bawah. Sisi tegak di seberang sudut θ adalah Sisi Depan.'
+            },
+            {
+              title: 'Kalibrasi 2: Sudut Pandang dari Puncak Menara (Depresi)',
+              desc: 'Sekarang sudut referensi θ berpindah ke pojok kanan atas! Hati-hati, apakah sisi tegak masih menjadi Sisi Depan?',
+              rotation: 0,
+              thetaPos: 'top-right', // sudut lancip 2
+              targetLabels: { bottom: 'Depan', vertical: 'Samping', hyp: 'Miring' },
+              hint: 'Ingat kasus Putri! Ketika sudut θ pindah ke atas, sisi yang berada tepat di seberang sudut θ sekarang adalah sisi alas (bawah)!'
+            },
+            {
+              title: 'Kalibrasi 3: Segitiga Terbalik (Struktur Jembatan Gantung)',
+              desc: 'Rangka baja jembatan memiliki sudut siku-siku di kanan atas dan sudut θ di kiri atas. Identifikasi ketiga sisinya!',
+              rotation: 180,
+              thetaPos: 'bottom-left', // Setelah rotasi 180, ini jadi kanan atas
+              targetLabels: { bottom: 'Samping', vertical: 'Depan', hyp: 'Miring' },
+              hint: 'Cari sudut siku-siku (90°) terlebih dahulu; sisi di hadapannya selalu Sisi Miring.'
+            },
+            {
+              title: 'Kalibrasi 4: Kemiringan Lereng Puncak Jaya',
+              desc: 'Segitiga diputar 90° dengan sudut θ berada di bagian bawah. Tentukan Sisi Depan, Sisi Samping, dan Sisi Miring!',
+              rotation: 90,
+              thetaPos: 'top-right',
+              targetLabels: { bottom: 'Depan', vertical: 'Samping', hyp: 'Miring' },
+              hint: 'Arahkan pandangan lurus dari sudut θ ke sisi di seberangnya untuk menemukan Sisi Depan.'
+            }
+          ]
+        },
+        // State Misi 2: Eksplorasi Bayangan & Sudut Istimewa
+        m2: {
+          phase: 'explore', // 'explore' atau 'vault'
+          sunAngle: 35,
+          vaultStep: 0,
+          vaultSolved: [false, false, false],
+          vaultChallenges: [
+            {
+              code: 'KODE-01',
+              story: 'Sebuah tangga darurat sepanjang 10 meter disandarkan pada dinding Menara Phinisi dengan sudut kemiringan 30° terhadap tanah. Berapa tinggi dinding yang dicapai ujung tangga?',
+              question: 'Gunakan sin 30° = 1/2. Tinggi = 10 × sin 30° = ... meter',
+              options: ['5 meter', '5√3 meter', '5√2 meter', '10√3 meter'],
+              correctIdx: 0,
+              explanation: 'Tinggi dinding adalah Sisi Depan sudut 30°, sedangkan panjang tangga (10 m) adalah Sisi Miring. Maka sin 30° = Tinggi / 10 → Tinggi = 10 × (1/2) = 5 meter.'
+            },
+            {
+              code: 'KODE-02',
+              story: 'Sebuah tugu peringatan membentuk bayangan di tanah datar sepanjang 12 meter saat sudut elevasi matahari tepat 45°.',
+              question: 'Gunakan tan 45° = 1. Berapa tinggi tugu sebenarnya?',
+              options: ['6 meter', '12√2 meter', '12 meter', '6√3 meter'],
+              correctIdx: 2,
+              explanation: 'Pada sudut 45°, segitiga siku-siku bersifat sama kaki! Karena tan 45° = Depan / Samping = 1, maka tinggi tugu sama persis dengan panjang bayangannya, yaitu 12 meter.'
+            },
+            {
+              code: 'KODE-03',
+              story: 'Kabel penahan tiang pemancar ditambatkan ke tanah sejauh 8 meter dari kaki tiang dan membentuk sudut 60° dengan tanah.',
+              question: 'Gunakan cos 60° = 1/2. Berapa panjang kabel penahan (Sisi Miring) tersebut?',
+              options: ['4 meter', '8√3 meter', '16 meter', '4√3 meter'],
+              correctIdx: 2,
+              explanation: 'Jarak 8 meter adalah Sisi Samping sudut 60°, dan panjang kabel adalah Sisi Miring. Maka cos 60° = 8 / Kabel → 1/2 = 8 / Kabel → Panjang kabel = 8 × 2 = 16 meter!'
+            }
+          ]
+        },
+        // State Misi 3: Misi Lapangan Surveyor (3 Studi Kasus Kontekstual)
+        m3: {
+          activeCase: 0, // 0, 1, 2
+          casesSolved: [false, false, false],
+          // Studi Kasus 1: Jembatan Youtefa (Lebar Sungai)
+          case1RatioChoice: null,
+          // Studi Kasus 2: Tinggi Jam Gadang (Perhatikan tinggi pengamat!)
+          case2Stage: 1, // 1: hitung tinggi dari mata, 2: tambahkan tinggi pengamat
+          // Studi Kasus 3: Detektif Kesalahan (Audit perhitungan layang-layang / menara)
+          case3SelectedBug: null
+        },
+        // State Misi 4: Jurnal Refleksi & Asesmen Diri
+        m4: {
+          ref1: '',
+          ref2: '',
+          ref3: '',
+          checks: [false, false, false, false],
+          certificateGenerated: false
+        },
+        feedbackCallback: null
+      },
+
+      init() {
+        this.updateHUD();
+        this.updateMiniCalc();
+        this.render();
+      },
+
+      goHome() {
+        SoundFX.play('click');
+        this.state.currentScreen = 'home';
+        this.render();
+      },
+
+      selectMission(missionKey) {
+        SoundFX.play('click');
+        this.state.currentScreen = missionKey;
+        this.render();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      },
+
+      addXP(amount) {
+        this.state.xp += amount;
+        this.updateHUD();
+      },
+
+      unlockBadge(badgeKey) {
+        if (!this.state.badges[badgeKey].earned) {
+          this.state.badges[badgeKey].earned = true;
+          SoundFX.play('badge');
+          this.updateHUD();
+        }
+      },
+
+      updateHUD() {
+        document.getElementById('hud-xp').textContent = `${this.state.xp} XP`;
+        const earnedCount = Object.values(this.state.badges).filter(b => b.earned).length;
+        document.getElementById('hud-badges').textContent = `${earnedCount}/4`;
+
+        const completedCount = Object.values(this.state.completedMissions).filter(Boolean).length;
+        const pct = Math.round((completedCount / 4) * 100);
+        document.getElementById('progress-bar').style.width = `${pct}%`;
+        document.getElementById('progress-percent').textContent = `${pct}% Selesai`;
+
+        // Render daftar lencana di modal
+        const badgeContainer = document.getElementById('badges-list-container');
+        if (badgeContainer) {
+          badgeContainer.innerHTML = Object.values(this.state.badges).map(b => `
+            <div class="p-3.5 rounded-2xl border ${b.earned ? `bg-${b.color}-50 border-${b.color}-200` : 'bg-slate-50 border-slate-200 opacity-60'} flex items-start gap-3">
+              <div class="w-10 h-10 rounded-xl flex-shrink-0 flex items-center justify-center ${b.earned ? `bg-${b.color}-600 text-white` : 'bg-slate-300 text-slate-500'}">
+                <i class="fa-solid ${b.icon}"></i>
+              </div>
+              <div>
+                <div class="font-bold text-xs text-slate-800 flex items-center gap-1.5">
+                  ${b.title}
+                  ${b.earned ? '<i class="fa-solid fa-circle-check text-emerald-500"></i>' : '<i class="fa-solid fa-lock text-slate-400"></i>'}
+                </div>
+                <p class="text-[11px] text-slate-600 mt-0.5 leading-snug">${b.desc}</p>
+              </div>
+            </div>
+          `).join('');
+        }
+      },
+
+      toggleModal(id) {
+        SoundFX.play('click');
+        const el = document.getElementById(id);
+        if (el) {
+          el.classList.toggle('hidden');
+        }
+      },
+
+      toggleSound() {
+        SoundFX.enabled = !SoundFX.enabled;
+        const btn = document.getElementById('btn-sound');
+        btn.innerHTML = SoundFX.enabled
+          ? '<i class="fa-solid fa-volume-high text-sm text-sky-600"></i>'
+          : '<i class="fa-solid fa-volume-xmark text-sm text-slate-400"></i>';
+        if (SoundFX.enabled) SoundFX.play('click');
+      },
+
+      updateMiniCalc() {
+        const angleInput = document.getElementById('calc-angle-input');
+        if (!angleInput) return;
+        let deg = parseFloat(angleInput.value);
+        if (isNaN(deg)) deg = 0;
+        if (deg < 0) deg = 0;
+        if (deg > 89.9) deg = 89.9;
+
+        const s = MathTrig.sin(deg);
+        const c = MathTrig.cos(deg);
+        const t = MathTrig.tan(deg);
+
+        document.getElementById('calc-sin-val').textContent = s.toFixed(4);
+        document.getElementById('calc-cos-val').textContent = c.toFixed(4);
+        document.getElementById('calc-tan-val').textContent = t.toFixed(4);
+
+        const multNum = parseFloat(document.getElementById('calc-mult-num').value) || 0;
+        const multFn = document.getElementById('calc-mult-fn').value;
+        const ratio = multFn === 'sin' ? s : multFn === 'cos' ? c : t;
+        document.getElementById('calc-mult-res').textContent = (multNum * ratio).toFixed(2);
+      },
+
+      showFeedback({ isSuccess, title, htmlBody, btnText = 'Lanjutkan', onConfirm = null }) {
+        const modal = document.getElementById('modal-feedback');
+        const iconWrap = document.getElementById('feedback-icon-wrap');
+        const titleEl = document.getElementById('feedback-title');
+        const bodyEl = document.getElementById('feedback-body');
+        const btnEl = document.getElementById('feedback-btn');
+
+        if (isSuccess) {
+          SoundFX.play('success');
+          iconWrap.className = 'w-16 h-16 rounded-2xl mx-auto mb-4 flex items-center justify-center text-3xl bg-emerald-100 text-emerald-600';
+          iconWrap.innerHTML = '<i class="fa-solid fa-circle-check"></i>';
+          btnEl.className = 'btn-game w-full py-3 rounded-xl font-extrabold text-white text-sm tracking-wide bg-emerald-600 hover:bg-emerald-700';
+        } else {
+          SoundFX.play('error');
+          iconWrap.className = 'w-16 h-16 rounded-2xl mx-auto mb-4 flex items-center justify-center text-3xl bg-amber-100 text-amber-600';
+          iconWrap.innerHTML = '<i class="fa-solid fa-magnifying-glass-chart"></i>';
+          btnEl.className = 'btn-game w-full py-3 rounded-xl font-extrabold text-white text-sm tracking-wide bg-amber-600 hover:bg-amber-700';
+        }
+
+        titleEl.textContent = title;
+        bodyEl.innerHTML = htmlBody;
+        btnEl.textContent = btnText;
+        this.state.feedbackCallback = onConfirm;
+        modal.classList.remove('hidden');
+      },
+
+      closeFeedback() {
+        SoundFX.play('click');
+        document.getElementById('modal-feedback').classList.add('hidden');
+        if (typeof this.state.feedbackCallback === 'function') {
+          const cb = this.state.feedbackCallback;
+          this.state.feedbackCallback = null;
+          cb();
+        }
+      },
+
+      /* ==================== RENDERER LAYAR UTAMA ==================== */
+      render() {
+        const main = document.getElementById('main-container');
+        switch (this.state.currentScreen) {
+          case 'home':
+            main.innerHTML = this.renderHome();
+            break;
+          case 'm1':
+            main.innerHTML = this.renderMission1();
+            break;
+          case 'm2':
+            main.innerHTML = this.renderMission2();
+            break;
+          case 'm3':
+            main.innerHTML = this.renderMission3();
+            break;
+          case 'm4':
+            main.innerHTML = this.renderMission4();
+            break;
+        }
+      },
+
+      /* ==================== LAYAR BERANDA / PETA EKSPEDISI ==================== */
+      renderHome() {
+        const m = this.state.completedMissions;
+        return `
+          <div class="space-y-6">
+            <!-- Hero Banner Ekspedisi -->
+            <div class="bg-gradient-to-br from-sky-700 via-blue-800 to-indigo-900 rounded-3xl p-6 sm:p-8 text-white shadow-xl relative overflow-hidden">
+              <div class="absolute right-0 bottom-0 opacity-10 pointer-events-none">
+                <svg width="320" height="220" viewBox="0 0 320 220">
+                  <polygon points="40,200 280,200 280,30" fill="white"/>
+                </svg>
+              </div>
+              <div class="relative z-10 max-w-3xl">
+                <div class="inline-flex items-center gap-2 bg-white/15 backdrop-blur-sm px-3.5 py-1 rounded-full text-xs font-bold text-sky-200 mb-3">
+                  <i class="fa-solid fa-earth-asia"></i> Eksplorasi Matematika Kontekstual • Deep Learning
+                </div>
+                <h2 class="text-2xl sm:text-4xl font-extrabold tracking-tight mb-3 leading-tight">
+                  Selamat Datang, <span class="text-amber-300">${this.state.playerName}</span>!
+                </h2>
+                <p class="text-sky-100 text-sm sm:text-base leading-relaxed mb-5">
+                  Sebagai Insinyur & Surveyor Muda Nusantara, kamu ditugaskan mengukur infrastruktur ikonik Indonesia tanpa harus memanjat puncak gunung atau menyeberangi sungai deras—cukup dengan kekuatan <b>Perbandingan Trigonometri (sin, cos, tan)</b>!
+                </p>
+
+                <!-- Input Nama Pemain -->
+                <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5 max-w-md bg-white/10 p-2 rounded-2xl border border-white/20">
+                  <input type="text" id="input-player-name" value="${this.state.playerName}" placeholder="Ketik namamu untuk sertifikat..."
+                    onchange="app.setPlayerName(this.value)"
+                    class="flex-1 bg-white text-slate-800 px-3.5 py-2 rounded-xl text-sm font-bold focus:outline-none" />
+                  <button onclick="app.setPlayerName(document.getElementById('input-player-name').value); app.selectMission('m1')"
+                    class="btn-game bg-amber-400 hover:bg-amber-300 text-slate-900 font-extrabold px-4 py-2 rounded-xl text-sm flex items-center justify-center gap-2">
+                    <span>Mulai Ekspedisi</span>
+                    <i class="fa-solid fa-arrow-right"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Pilar Deep Learning Banner -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+              <div class="bg-white rounded-2xl p-4 border border-sky-100 shadow-sm flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-sky-100 text-sky-600 flex items-center justify-center font-bold"><i class="fa-solid fa-brain"></i></div>
+                <div>
+                  <h4 class="font-bold text-xs text-slate-800">Mindful (Berkesadaran)</h4>
+                  <p class="text-[11px] text-slate-500">Fokus pada relasi sudut & sisi, bukan sekadar menghafal.</p>
+                </div>
+              </div>
+              <div class="bg-white rounded-2xl p-4 border border-teal-100 shadow-sm flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-teal-100 text-teal-600 flex items-center justify-center font-bold"><i class="fa-solid fa-bridge"></i></div>
+                <div>
+                  <h4 class="font-bold text-xs text-slate-800">Meaningful (Bermakna)</h4>
+                  <p class="text-[11px] text-slate-500">Konteks proyek nyata Indonesia dari Papua hingga Sumatera.</p>
+                </div>
+              </div>
+              <div class="bg-white rounded-2xl p-4 border border-amber-100 shadow-sm flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-amber-100 text-amber-600 flex items-center justify-center font-bold"><i class="fa-solid fa-gamepad"></i></div>
+                <div>
+                  <h4 class="font-bold text-xs text-slate-800">Joyful (Menggembirakan)</h4>
+                  <p class="text-[11px] text-slate-500">Simulasi interaktif, teka-teki brankas, dan lencana prestasi.</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Kartu 4 Misi Siklus Pembelajaran -->
+            <div>
+              <h3 class="font-extrabold text-lg text-slate-800 mb-3 flex items-center gap-2">
+                <i class="fa-solid fa-map-location-dot text-sky-600"></i> Peta Misi & Siklus Pembelajaran
+              </h3>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                
+                <!-- MISI 1 -->
+                <div onclick="app.selectMission('m1')" class="group cursor-pointer bg-white hover:bg-sky-50/40 rounded-3xl p-5 border-2 ${m.m1 ? 'border-emerald-400' : 'border-sky-100 hover:border-sky-400'} shadow-sm transition-all">
+                  <div class="flex items-start justify-between mb-3">
+                    <span class="px-3 py-1 rounded-full text-[11px] font-extrabold bg-sky-100 text-sky-700">FASE MEMAHAMI • MINDFUL</span>
+                    ${m.m1 ? '<span class="text-emerald-600 font-extrabold text-xs flex items-center gap-1"><i class="fa-solid fa-circle-check"></i> Selesai</span>' : '<span class="text-slate-400 text-xs font-bold">+200 XP</span>'}
+                  </div>
+                  <div class="flex items-center gap-3.5 mb-2">
+                    <div class="w-12 h-12 rounded-2xl bg-sky-600 text-white flex items-center justify-center text-xl shadow-md group-hover:scale-105 transition">
+                      <i class="fa-solid fa-compass-drafting"></i>
+                    </div>
+                    <div>
+                      <h4 class="font-extrabold text-base text-slate-800">Misi 1: Kalibrasi Teodolit</h4>
+                      <p class="text-xs text-slate-500">Orientasi Sisi Depan, Samping & Miring</p>
+                    </div>
+                  </div>
+                  <p class="text-xs text-slate-600 leading-relaxed">
+                    Latih ketelitian mata surveyor mengenali sisi segitiga siku-siku yang dirotasi ke berbagai arah saat sudut referensi θ berpindah.
+                  </p>
+                </div>
+
+                <!-- MISI 2 -->
+                <div onclick="app.selectMission('m2')" class="group cursor-pointer bg-white hover:bg-amber-50/40 rounded-3xl p-5 border-2 ${m.m2 ? 'border-emerald-400' : 'border-amber-100 hover:border-amber-400'} shadow-sm transition-all">
+                  <div class="flex items-start justify-between mb-3">
+                    <span class="px-3 py-1 rounded-full text-[11px] font-extrabold bg-amber-100 text-amber-800">FASE MEMAHAMI • MEANINGFUL</span>
+                    ${m.m2 ? '<span class="text-emerald-600 font-extrabold text-xs flex items-center gap-1"><i class="fa-solid fa-circle-check"></i> Selesai</span>' : '<span class="text-slate-400 text-xs font-bold">+250 XP</span>'}
+                  </div>
+                  <div class="flex items-center gap-3.5 mb-2">
+                    <div class="w-12 h-12 rounded-2xl bg-amber-500 text-white flex items-center justify-center text-xl shadow-md group-hover:scale-105 transition">
+                      <i class="fa-solid fa-sun"></i>
+                    </div>
+                    <div>
+                      <h4 class="font-extrabold text-base text-slate-800">Misi 2: Bayangan & Sudut Istimewa</h4>
+                      <p class="text-xs text-slate-500">Kesebangunan & Nilai Eksak 30°, 45°, 60°</p>
+                    </div>
+                  </div>
+                  <p class="text-xs text-slate-600 leading-relaxed">
+                    Eksplorasi rasio bayangan anak, remaja, dan dewasa di bawah sinar matahari, lalu pecahkan brankas kode sudut istimewa!
+                  </p>
+                </div>
+
+                <!-- MISI 3 -->
+                <div onclick="app.selectMission('m3')" class="group cursor-pointer bg-white hover:bg-teal-50/40 rounded-3xl p-5 border-2 ${m.m3 ? 'border-emerald-400' : 'border-teal-100 hover:border-teal-400'} shadow-sm transition-all">
+                  <div class="flex items-start justify-between mb-3">
+                    <span class="px-3 py-1 rounded-full text-[11px] font-extrabold bg-teal-100 text-teal-800">FASE MENGAPLIKASIKAN • JOYFUL</span>
+                    ${m.m3 ? '<span class="text-emerald-600 font-extrabold text-xs flex items-center gap-1"><i class="fa-solid fa-circle-check"></i> Selesai</span>' : '<span class="text-slate-400 text-xs font-bold">+350 XP</span>'}
+                  </div>
+                  <div class="flex items-center gap-3.5 mb-2">
+                    <div class="w-12 h-12 rounded-2xl bg-teal-600 text-white flex items-center justify-center text-xl shadow-md group-hover:scale-105 transition">
+                      <i class="fa-solid fa-mountain-sun"></i>
+                    </div>
+                    <div>
+                      <h4 class="font-extrabold text-base text-slate-800">Misi 3: Misi Lapangan Surveyor</h4>
+                      <p class="text-xs text-slate-500">3 Proyek Kontekstual & Detektif Kesalahan</p>
+                    </div>
+                  </div>
+                  <p class="text-xs text-slate-600 leading-relaxed">
+                    Ukur lebar teluk Jembatan Youtefa, tinggi Jam Gadang dengan klinometer, dan audit kekeliruan perhitungan siswa lain.
+                  </p>
+                </div>
+
+                <!-- MISI 4 -->
+                <div onclick="app.selectMission('m4')" class="group cursor-pointer bg-white hover:bg-indigo-50/40 rounded-3xl p-5 border-2 ${m.m4 ? 'border-emerald-400' : 'border-indigo-100 hover:border-indigo-400'} shadow-sm transition-all">
+                  <div class="flex items-start justify-between mb-3">
+                    <span class="px-3 py-1 rounded-full text-[11px] font-extrabold bg-indigo-100 text-indigo-800">FASE MEREFLEKSI • MINDFUL</span>
+                    ${m.m4 ? '<span class="text-emerald-600 font-extrabold text-xs flex items-center gap-1"><i class="fa-solid fa-circle-check"></i> Selesai</span>' : '<span class="text-slate-400 text-xs font-bold">+200 XP</span>'}
+                  </div>
+                  <div class="flex items-center gap-3.5 mb-2">
+                    <div class="w-12 h-12 rounded-2xl bg-indigo-600 text-white flex items-center justify-center text-xl shadow-md group-hover:scale-105 transition">
+                      <i class="fa-solid fa-award"></i>
+                    </div>
+                    <div>
+                      <h4 class="font-extrabold text-base text-slate-800">Misi 4: Jurnal Refleksi & Sertifikat</h4>
+                      <p class="text-xs text-slate-500">Debriefing Pemahaman & Asesmen Diri</p>
+                    </div>
+                  </div>
+                  <p class="text-xs text-slate-600 leading-relaxed">
+                    Rangkum pemahaman mendalammu mengenai hubungan sin, cos, dan tan serta cetak Sertifikat Surveyor Muda Nusantara.
+                  </p>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        `;
+      },
+
+      setPlayerName(val) {
+        const clean = val.trim();
+        this.state.playerName = clean || 'Surveyor Muda';
+      },
+
+      /* ==================== MISI 1: KALIBRASI TEODOLIT ==================== */
+      renderMission1() {
+        const m1 = this.state.m1;
+        const q = m1.questions[m1.step];
+        const a = m1.assignments;
+
+        return `
+          <div class="space-y-5">
+            <!-- Header Navigasi Misi -->
+            <div class="flex flex-wrap items-center justify-between gap-2 bg-white p-4 rounded-2xl border border-sky-100 shadow-sm">
+              <button onclick="app.goHome()" class="text-xs font-bold text-slate-500 hover:text-sky-600 flex items-center gap-1.5">
+                <i class="fa-solid fa-arrow-left"></i> Kembali ke Peta
+              </button>
+              <div class="flex items-center gap-2">
+                <span class="px-3 py-1 rounded-full bg-sky-100 text-sky-700 text-xs font-extrabold">Misi 1: Kalibrasi Teodolit</span>
+                <span class="text-xs font-bold text-slate-500">Tahap ${m1.step + 1} / ${m1.questions.length}</span>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-5">
+              <!-- Panel Visual SVG Segitiga Interaktif -->
+              <div class="lg:col-span-7 bg-white rounded-3xl p-5 sm:p-6 border border-slate-200 shadow-sm flex flex-col justify-between">
+                <div>
+                  <h3 class="font-extrabold text-lg text-slate-800 mb-1">${q.title}</h3>
+                  <p class="text-xs sm:text-sm text-slate-600 mb-4">${q.desc}</p>
+                </div>
+
+                <!-- Kanvas SVG Segitiga Siku-siku -->
+                <div class="bg-slate-900 rounded-2xl p-4 flex items-center justify-center relative overflow-hidden min-h-[290px]">
+                  <!-- Grid Latar Lensa Teodolit -->
+                  <div class="absolute inset-0 opacity-20" style="background-image: linear-gradient(#38bdf8 1px, transparent 1px), linear-gradient(90deg, #38bdf8 1px, transparent 1px); background-size: 24px 24px;"></div>
+                  
+                  <svg viewBox="0 0 360 280" class="w-full max-w-[360px] h-auto relative z-10">
+                    <g transform="rotate(${q.rotation} 180 140)">
+                      <!-- Segitiga Siku-siku Dasar: Siku-siku di (260, 210), Kiri Bawah (80, 210), Kanan Atas (260, 60) -->
+                      <polygon points="80,210 260,210 260,60" fill="rgba(14, 165, 233, 0.18)" stroke="#38bdf8" stroke-width="3.5" stroke-linejoin="round" />
+                      
+                      <!-- Simbol Siku-siku 90° -->
+                      <polyline points="240,210 240,190 260,190" fill="none" stroke="#f8fafc" stroke-width="2.5" />
+                      <circle cx="250" cy="200" r="2" fill="#f8fafc" />
+
+                      <!-- Sudut Referensi Theta -->
+                      ${q.thetaPos === 'bottom-left' ? `
+                        <path d="M 122,210 A 42,42 0 0,0 112,183" fill="rgba(251, 191, 36, 0.35)" stroke="#fbbf24" stroke-width="3" />
+                        <g transform="rotate(${-q.rotation} 134 198)">
+                          <text x="134" y="202" fill="#fbbf24" font-weight="800" font-size="18" text-anchor="middle">θ</text>
+                        </g>
+                      ` : `
+                        <path d="M 260,102 A 42,42 0 0,1 228,87" fill="rgba(251, 191, 36, 0.35)" stroke="#fbbf24" stroke-width="3" />
+                        <g transform="rotate(${-q.rotation} 238 112)">
+                          <text x="238" y="116" fill="#fbbf24" font-weight="800" font-size="18" text-anchor="middle">θ</text>
+                        </g>
+                      `}
+
+                      <!-- Slot Klik Sisi Bawah (Alas Dasar) -->
+                      <g class="cursor-pointer" onclick="app.assignM1Side('bottom')">
+                        <line x1="80" y1="210" x2="260" y2="210" stroke="transparent" stroke-width="24" />
+                        <g transform="rotate(${-q.rotation} 170 238)">
+                          <rect x="115" y="223" width="110" height="28" rx="8" fill="${a.bottom ? '#0284c7' : '#1e293b'}" stroke="${a.bottom ? '#7dd3fc' : '#64748b'}" stroke-width="2" />
+                          <text x="170" y="241" text-anchor="middle" fill="#ffffff" font-size="12" font-weight="bold">
+                            ${a.bottom ? a.bottom : '[ Klik Sisi Ini ]'}
+                          </text>
+                        </g>
+                      </g>
+
+                      <!-- Slot Klik Sisi Tegak (Kanan Dasar) -->
+                      <g class="cursor-pointer" onclick="app.assignM1Side('vertical')">
+                        <line x1="260" y1="60" x2="260" y2="210" stroke="transparent" stroke-width="24" />
+                        <g transform="rotate(${-q.rotation} 308 135)">
+                          <rect x="253" y="121" width="110" height="28" rx="8" fill="${a.vertical ? '#0284c7' : '#1e293b'}" stroke="${a.vertical ? '#7dd3fc' : '#64748b'}" stroke-width="2" />
+                          <text x="308" y="139" text-anchor="middle" fill="#ffffff" font-size="12" font-weight="bold">
+                            ${a.vertical ? a.vertical : '[ Klik Sisi Ini ]'}
+                          </text>
+                        </g>
+                      </g>
+
+                      <!-- Slot Klik Sisi Miring (Hipotenusa) -->
+                      <g class="cursor-pointer" onclick="app.assignM1Side('hyp')">
+                        <line x1="80" y1="210" x2="260" y2="60" stroke="transparent" stroke-width="24" />
+                        <g transform="rotate(${-q.rotation} 135 112)">
+                          <rect x="80" y="98" width="110" height="28" rx="8" fill="${a.hyp ? '#0284c7' : '#1e293b'}" stroke="${a.hyp ? '#7dd3fc' : '#64748b'}" stroke-width="2" />
+                          <text x="135" y="116" text-anchor="middle" fill="#ffffff" font-size="12" font-weight="bold">
+                            ${a.hyp ? a.hyp : '[ Klik Sisi Ini ]'}
+                          </text>
+                        </g>
+                      </g>
+                    </g>
+                  </svg>
+                </div>
+              </div>
+
+              <!-- Panel Kontrol Pemasangan Label -->
+              <div class="lg:col-span-5 bg-white rounded-3xl p-5 sm:p-6 border border-slate-200 shadow-sm flex flex-col justify-between">
+                <div class="space-y-4">
+                  <div class="bg-sky-50 border border-sky-200 rounded-2xl p-3.5 text-xs text-sky-900">
+                    <b>Cara Kalibrasi:</b>
+                    <ol class="list-decimal ml-4 mt-1 space-y-1">
+                      <li>Pilih salah satu kartu label di bawah ini.</li>
+                      <li>Klik kotak target <b>[ Klik Sisi Ini ]</b> pada segitiga di layar teodolit.</li>
+                      <li>Setelah ketiga sisi terpasang, tekan tombol <b>Periksa Kalibrasi</b>.</li>
+                    </ol>
+                  </div>
+
+                  <!-- Pilihan Label Sisi -->
+                  <div class="space-y-2.5">
+                    <p class="text-xs font-bold text-slate-500 uppercase tracking-wider">Pilih Label Sisi:</p>
+                    ${['Depan', 'Samping', 'Miring'].map(label => {
+                      const isSelected = m1.selectedSide === label;
+                      const colorMap = {
+                        Depan: 'rose',
+                        Samping: 'teal',
+                        Miring: 'indigo'
+                      };
+                      const c = colorMap[label];
+                      return `
+                        <button onclick="app.selectM1Label('${label}')"
+                          class="w-full p-3.5 rounded-2xl border-2 text-left transition flex items-center justify-between ${isSelected ? `border-${c}-600 bg-${c}-50 shadow-sm` : 'border-slate-200 hover:border-slate-300 bg-white'}">
+                          <div>
+                            <div class="font-extrabold text-sm text-${c}-700">Sisi ${label}</div>
+                            <div class="text-[11px] text-slate-500">
+                              ${label === 'Depan' ? 'Berada tepat di seberang sudut θ' : label === 'Samping' ? 'Mengapit sudut θ dan sudut siku-siku' : 'Selalu di hadapan sudut siku-siku (90°)'}
+                            </div>
+                          </div>
+                          <div class="w-6 h-6 rounded-full border-2 flex items-center justify-center ${isSelected ? `border-${c}-600 bg-${c}-600 text-white` : 'border-slate-300'}">
+                            ${isSelected ? '<i class="fa-solid fa-check text-xs"></i>' : ''}
+                          </div>
+                        </button>
+                      `;
+                    }).join('')}
+                  </div>
+                </div>
+
+                <div class="pt-5 space-y-2.5">
+                  <button onclick="app.resetM1Assignments()" class="w-full py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-600 font-bold text-xs transition">
+                    <i class="fa-solid fa-rotate-left mr-1"></i> Reset Pilihan Sisi
+                  </button>
+                  <button onclick="app.checkMission1()" class="btn-game w-full py-3.5 rounded-xl bg-sky-600 hover:bg-sky-700 text-white font-extrabold text-sm">
+                    <i class="fa-solid fa-check-double mr-1.5"></i> Periksa Kalibrasi Teodolit
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+      },
+
+      selectM1Label(label) {
+        SoundFX.play('click');
+        this.state.m1.selectedSide = label;
+        this.render();
+      },
+
+      assignM1Side(slot) {
+        const selected = this.state.m1.selectedSide;
+        if (!selected) {
+          this.showFeedback({
+            isSuccess: false,
+            title: 'Pilih Label Terlebih Dahulu',
+            htmlBody: 'Klik salah satu kartu label (<b>Sisi Depan</b>, <b>Sisi Samping</b>, atau <b>Sisi Miring</b>) di panel kanan sebelum mengeklik sisi segitiga.',
+            btnText: 'Mengerti'
+          });
+          return;
+        }
+        SoundFX.play('click');
+        // Hapus label yang sama jika sebelumnya sudah terpasang di slot lain
+        const a = this.state.m1.assignments;
+        Object.keys(a).forEach(k => {
+          if (a[k] === selected) a[k] = null;
+        });
+        a[slot] = selected;
+        this.render();
+      },
+
+      resetM1Assignments() {
+        SoundFX.play('click');
+        this.state.m1.assignments = { bottom: null, vertical: null, hyp: null };
+        this.render();
+      },
+
+      checkMission1() {
+        const m1 = this.state.m1;
+        const q = m1.questions[m1.step];
+        const a = m1.assignments;
+
+        if (!a.bottom || !a.vertical || !a.hyp) {
+          this.showFeedback({
+            isSuccess: false,
+            title: 'Kalibrasi Belum Lengkap',
+            htmlBody: 'Pastikan ketiga sisi segitiga (Depan, Samping, dan Miring) sudah kamu pasang labelnya sebelum melakukan pemeriksaan.',
+            btnText: 'Lengkapi Sekarang'
+          });
+          return;
+        }
+
+        const isCorrect =
+          a.bottom === q.targetLabels.bottom &&
+          a.vertical === q.targetLabels.vertical &&
+          a.hyp === q.targetLabels.hyp;
+
+        if (isCorrect) {
+          this.addXP(50);
+          if (m1.step < m1.questions.length - 1) {
+            this.showFeedback({
+              isSuccess: true,
+              title: 'Kalibrasi Tepat Sekali! (+50 XP)',
+              htmlBody: `Luar biasa! Kamu berhasil mengidentifikasi posisi <b>Sisi Depan</b>, <b>Sisi Samping</b>, dan <b>Sisi Miring</b> berdasarkan letak sudut referensi <b>θ</b> meskipun segitiga dirotasi.`,
+              btnText: 'Lanjut ke Kalibrasi Berikutnya',
+              onConfirm: () => {
+                m1.step++;
+                m1.assignments = { bottom: null, vertical: null, hyp: null };
+                this.render();
+              }
+            });
+          } else {
+            this.state.completedMissions.m1 = true;
+            this.unlockBadge('kalibrator');
+            this.showFeedback({
+              isSuccess: true,
+              title: 'Misi 1 Selesai! Lencana Kalibrator Andal Diraih!',
+              htmlBody: `Selamat, <b>${this.state.playerName}</b>! Kamu telah membuktikan bahwa penamaan Sisi Depan dan Sisi Samping bersifat relatif terhadap sudut <b>θ</b> yang diamati. Sekarang teodolitmu siap digunakan untuk eksplorasi sudut!`,
+              btnText: 'Lanjut ke Misi 2',
+              onConfirm: () => {
+                m1.step = 0;
+                m1.assignments = { bottom: null, vertical: null, hyp: null };
+                this.selectMission('m2');
+              }
+            });
+          }
+        } else {
+          // Scaffolding konstruktif (menganalisis miskonsepsi spesifik)
+          let misconceptionMsg = '';
+          if (a.hyp !== 'Miring') {
+            misconceptionMsg = `Perhatikan posisi <b>Sisi Miring (Hipotenusa)</b>: sisi ini <i>selalu</i> berada tepat di seberang sudut siku-siku (90°) dan tidak pernah berubah meskipun sudut θ berpindah.`;
+          } else {
+            misconceptionMsg = `Kamu sudah tepat menandai <b>Sisi Miring</b>, namun <b>Sisi Depan</b> dan <b>Sisi Samping</b> masih tertukar! Seperti kekeliruan tokoh Putri di buku paket, jangan menganggap sisi tegak selalu Sisi Depan. Tarik garis lurus dari sudut <b>θ</b> ke sisi di hadapannya—itulah <b>Sisi Depan</b>!`;
+          }
+
+          this.showFeedback({
+            isSuccess: false,
+            title: 'Hasil Kalibrasi Belum Tepat',
+            htmlBody: `<p class="mb-2">${misconceptionMsg}</p><div class="p-2.5 bg-amber-100/70 rounded-xl text-xs font-semibold text-amber-900"><i class="fa-solid fa-lightbulb mr-1"></i> Petunjuk: ${q.hint}</div>`,
+            btnText: 'Perbaiki Kalibrasi'
+          });
+        }
+      },
+
+      /* ==================== MISI 2: EKSPLORASI BAYANGAN & SUDUT ISTIMEWA ==================== */
+      renderMission2() {
+        const m2 = this.state.m2;
+        const angle = m2.sunAngle;
+        const tanVal = MathTrig.tan(angle);
+        const sinVal = MathTrig.sin(angle);
+        const cosVal = MathTrig.cos(angle);
+
+        // Tinggi 3 subjek (dalam meter): Anak Kecil (1.2m), Remaja (1.5m), Orang Dewasa (1.8m)
+        const subjects = [
+          { name: 'Anak Kecil', h: 1.2, shadow: 1.2 / tanVal, color: '#0ea5e9' },
+          { name: 'Remaja SMA', h: 1.5, shadow: 1.5 / tanVal, color: '#10b981' },
+          { name: 'Orang Dewasa', h: 1.8, shadow: 1.8 / tanVal, color: '#f59e0b' }
+        ];
+
+        return `
+          <div class="space-y-5">
+            <!-- Header Navigasi -->
+            <div class="flex flex-wrap items-center justify-between gap-2 bg-white p-4 rounded-2xl border border-amber-100 shadow-sm">
+              <button onclick="app.goHome()" class="text-xs font-bold text-slate-500 hover:text-amber-600 flex items-center gap-1.5">
+                <i class="fa-solid fa-arrow-left"></i> Kembali ke Peta
+              </button>
+              <div class="flex items-center gap-2">
+                <button onclick="app.setM2Phase('explore')" class="px-3 py-1.5 rounded-xl text-xs font-extrabold transition ${m2.phase === 'explore' ? 'bg-amber-500 text-white shadow' : 'bg-slate-100 text-slate-600'}">
+                  1. Lab Eksplorasi Bayangan
+                </button>
+                <button onclick="app.setM2Phase('vault')" class="px-3 py-1.5 rounded-xl text-xs font-extrabold transition ${m2.phase === 'vault' ? 'bg-indigo-600 text-white shadow' : 'bg-slate-100 text-slate-600'}">
+                  2. Brankas Sudut Istimewa
+                </button>
+              </div>
+            </div>
+
+            ${m2.phase === 'explore' ? `
+              <!-- FASE 2A: SIMULASI EKSPLORASI 3.1 KESEBANGUNAN & RASIO KONSTAN -->
+              <div class="bg-white rounded-3xl p-5 sm:p-6 border border-slate-200 shadow-sm space-y-5">
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-100 pb-4">
+                  <div>
+                    <span class="text-[11px] font-extrabold text-amber-600 uppercase tracking-wider">Eksplorasi 3.1 • Kesebangunan Segitiga</span>
+                    <h3 class="font-extrabold text-lg sm:text-xl text-slate-800">Mengapa Perbandingan Trigonometri Selalu Konstan?</h3>
+                    <p class="text-xs sm:text-sm text-slate-600 mt-1">
+                      Geser <b>Sudut Elevasi Matahari (θ)</b> di bawah ini. Amati panjang bayangan Anak Kecil, Remaja, dan Orang Dewasa, lalu perhatikan kolom rasio <b>Tinggi / Bayangan (tan θ)</b>!
+                    </p>
+                  </div>
+                  <!-- Tombol Preset Sudut Istimewa -->
+                  <div class="flex flex-wrap gap-1.5">
+                    <span class="text-xs font-bold text-slate-500 w-full">Uji Sudut Istimewa:</span>
+                    ${[30, 45, 60].map(deg => `
+                      <button onclick="app.updateSunAngle(${deg})" class="px-3 py-1.5 rounded-xl text-xs font-extrabold border ${angle === deg ? 'bg-amber-500 text-white border-amber-600' : 'bg-amber-50 text-amber-800 border-amber-200 hover:bg-amber-100'}">
+                        ${deg}°
+                      </button>
+                    `).join('')}
+                  </div>
+                </div>
+
+                <!-- Slider Kontrol Sudut Matahari -->
+                <div class="bg-amber-50/70 rounded-2xl p-4 border border-amber-200">
+                  <div class="flex items-center justify-between mb-2">
+                    <label class="font-extrabold text-sm text-amber-900 flex items-center gap-2">
+                      <i class="fa-solid fa-sun text-amber-500 text-lg"></i> Sudut Elevasi Matahari (θ):
+                    </label>
+                    <span class="font-mono-math font-extrabold text-xl text-amber-700 bg-white px-3 py-0.5 rounded-xl border border-amber-200">${angle}°</span>
+                  </div>
+                  <input type="range" min="20" max="70" value="${angle}" oninput="app.updateSunAngle(this.value)" class="w-full" />
+                  <div class="flex justify-between text-[11px] font-bold text-amber-700 mt-1">
+                    <span>20° (Pagi / Sore)</span>
+                    <span>45° (Sudut Istimewa)</span>
+                    <span>70° (Menjelang Siang)</span>
+                  </div>
+                </div>
+
+                <!-- Visualisasi SVG 3 Segitiga Sebangun -->
+                <div class="bg-gradient-to-b from-sky-200 via-sky-100 to-emerald-100 rounded-2xl p-4 border border-sky-200 overflow-hidden">
+                  <svg viewBox="0 0 680 230" class="w-full h-auto">
+                    <!-- Matahari -->
+                    <circle cx="55" cy="42" r="24" fill="#fbbf24" opacity="0.9" />
+                    <circle cx="55" cy="42" r="32" fill="#fbbf24" opacity="0.25" />
+                    <!-- Tanah -->
+                    <rect x="0" y="195" width="680" height="35" fill="#10b981" opacity="0.25" />
+                    <line x1="0" y1="195" x2="680" y2="195" stroke="#059669" stroke-width="3" />
+
+                    ${subjects.map((sub, idx) => {
+                      const baseX = 190 + idx * 220;
+                      const scale = 68; // piksel per meter
+                      const hPx = sub.h * scale;
+                      // Batasi panjang bayangan visual agar tetap muat rapi di layar
+                      const rawShadowPx = sub.shadow * scale;
+                      const sPx = Math.min(rawShadowPx, 175);
+                      const topY = 195 - hPx;
+                      const tipX = baseX - sPx;
+
+                      return `
+                        <g>
+                          <!-- Segitiga Bayangan -->
+                          <polygon points="${tipX},195 ${baseX},195 ${baseX},${topY}" fill="${sub.color}" fill-opacity="0.22" stroke="${sub.color}" stroke-width="2.5" stroke-dasharray="5,3" />
+                          <!-- Garis Sinar Matahari (Sisi Miring) -->
+                          <line x1="${tipX}" y1="195" x2="${baseX}" y2="${topY}" stroke="#f59e0b" stroke-width="2" />
+                          <!-- Sosok Pengamat (Sisi Depan) -->
+                          <line x1="${baseX}" y1="195" x2="${baseX}" y2="${topY + 12}" stroke="#1e293b" stroke-width="5" stroke-linecap="round" />
+                          <circle cx="${baseX}" cy="${topY + 6}" r="6" fill="#1e293b" />
+                          <!-- Bayangan di Tanah (Sisi Samping) -->
+                          <line x1="${tipX}" y1="195" x2="${baseX}" y2="195" stroke="#0f172a" stroke-width="4" />
+                          <!-- Label -->
+                          <text x="${baseX}" y="214" text-anchor="middle" font-size="11" font-weight="bold" fill="#0f172a">${sub.name}</text>
+                          <text x="${baseX + 8}" y="${195 - hPx / 2}" font-size="10" font-weight="bold" fill="#0f172a">${sub.h.toFixed(1)}m</text>
+                          <text x="${(tipX + baseX) / 2}" y="189" text-anchor="middle" font-size="10" font-weight="bold" fill="#0369a1">${sub.shadow.toFixed(2)}m</text>
+                        </g>
+                      `;
+                    }).join('')}
+                  </svg>
+                </div>
+
+                <!-- Tabel Bukti Rasio Konstan -->
+                <div class="overflow-x-auto rounded-2xl border border-slate-200">
+                  <table class="w-full text-center text-xs sm:text-sm">
+                    <thead class="bg-slate-800 text-white">
+                      <tr>
+                        <th class="py-2.5 px-3 text-left">Subjek Pengamatan</th>
+                        <th class="py-2.5 px-3">Tinggi (Sisi Depan)</th>
+                        <th class="py-2.5 px-3">Bayangan (Sisi Samping)</th>
+                        <th class="py-2.5 px-3 bg-amber-600">Rasio Depan / Samping (tan ${angle}°)</th>
+                      </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-200 font-mono-math">
+                      ${subjects.map(sub => `
+                        <tr class="bg-white">
+                          <td class="py-2.5 px-3 text-left font-sans font-bold text-slate-800">${sub.name}</td>
+                          <td class="py-2.5 px-3">${sub.h.toFixed(2)} m</td>
+                          <td class="py-2.5 px-3">${sub.shadow.toFixed(2)} m</td>
+                          <td class="py-2.5 px-3 font-extrabold text-amber-700 bg-amber-50">${(sub.h / sub.shadow).toFixed(4)}</td>
+                        </tr>
+                      `).join('')}
+                    </tbody>
+                  </table>
+                </div>
+
+                <div class="flex flex-col sm:flex-row items-center justify-between gap-4 bg-emerald-50 border border-emerald-200 rounded-2xl p-4">
+                  <div class="text-xs sm:text-sm text-emerald-900">
+                    <b>Kesimpulan Penting:</b> Meskipun tinggi badan berbeda-beda, nilai perbandingan <b>Tinggi / Bayangan</b> selalu sama persis (<b>${tanVal.toFixed(4)}</b>) selama sudut matahari tetap <b>${angle}°</b>! Inilah dasar dari nilai <b>sin ${angle}° = ${sinVal.toFixed(3)}</b>, <b>cos ${angle}° = ${cosVal.toFixed(3)}</b>, dan <b>tan ${angle}° = ${tanVal.toFixed(3)}</b>.
+                  </div>
+                  <button onclick="app.setM2Phase('vault')" class="btn-game flex-shrink-0 bg-indigo-600 hover:bg-indigo-700 text-white font-extrabold px-5 py-3 rounded-xl text-xs sm:text-sm">
+                    Lanjut ke Brankas Sudut Istimewa <i class="fa-solid fa-arrow-right ml-1"></i>
+                  </button>
+                </div>
+              </div>
+            ` : `
+              <!-- FASE 2B: BRANKAS KODE SUDUT ISTIMEWA (30, 45, 60 DERAJAT) -->
+              ${this.renderMission2Vault()}
+            `}
+          </div>
+        `;
+      },
+
+      setM2Phase(phase) {
+        SoundFX.play('click');
+        this.state.m2.phase = phase;
+        this.render();
+      },
+
+      updateSunAngle(val) {
+        this.state.m2.sunAngle = parseInt(val, 10);
+        this.render();
+      },
+
+      renderMission2Vault() {
+        const m2 = this.state.m2;
+        const idx = m2.vaultStep;
+        const ch = m2.vaultChallenges[idx];
+        const solvedCount = m2.vaultSolved.filter(Boolean).length;
+
+        return `
+          <div class="bg-white rounded-3xl p-5 sm:p-7 border border-indigo-100 shadow-sm space-y-5">
+            <div class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-100 pb-4">
+              <div>
+                <span class="text-[11px] font-extrabold text-indigo-600 uppercase tracking-wider">Eksplorasi 3.3 • Aplikasi Nilai Eksak Sudut Istimewa</span>
+                <h3 class="font-extrabold text-lg sm:text-xl text-slate-800">Brankas Logistik Ekspedisi (${solvedCount}/3 Terbuka)</h3>
+              </div>
+              <div class="flex gap-2">
+                ${m2.vaultChallenges.map((c, i) => `
+                  <button onclick="app.state.m2.vaultStep = ${i}; app.render()"
+                    class="w-10 h-10 rounded-xl font-extrabold text-sm flex items-center justify-center border-2 transition ${m2.vaultSolved[i] ? 'bg-emerald-500 text-white border-emerald-600' : i === idx ? 'bg-indigo-600 text-white border-indigo-700' : 'bg-slate-100 text-slate-600 border-slate-200'}">
+                    ${m2.vaultSolved[i] ? '<i class="fa-solid fa-lock-open"></i>' : i + 1}
+                  </button>
+                `).join('')}
+              </div>
+            </div>
+
+            <div class="bg-slate-900 text-white rounded-2xl p-5 sm:p-6 relative overflow-hidden">
+              <div class="flex items-center justify-between mb-3">
+                <span class="px-3 py-1 rounded-lg bg-indigo-500/30 border border-indigo-400/40 font-mono-math text-xs font-bold text-indigo-200">${ch.code}</span>
+                <button onclick="app.toggleModal('modal-formula')" class="text-xs text-amber-300 hover:underline font-bold">
+                  <i class="fa-solid fa-table mr-1"></i> Cek Tabel Sudut Istimewa
+                </button>
+              </div>
+              <p class="text-sm sm:text-base text-slate-200 leading-relaxed mb-4">${ch.story}</p>
+              <div class="p-3.5 rounded-xl bg-white/10 border border-white/15 font-bold text-amber-300 text-sm">
+                <i class="fa-solid fa-key mr-2"></i>${ch.question}
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              ${ch.options.map((opt, oIdx) => `
+                <button onclick="app.checkVaultOption(${oIdx})"
+                  class="btn-game p-4 rounded-2xl border-2 border-slate-200 hover:border-indigo-500 bg-white hover:bg-indigo-50/40 text-left font-mono-math font-extrabold text-base text-slate-800 flex items-center justify-between">
+                  <span>${opt}</span>
+                  <span class="w-8 h-8 rounded-xl bg-slate-100 text-slate-500 text-xs flex items-center justify-center font-sans">Pilih</span>
+                </button>
+              `).join('')}
+            </div>
+          </div>
+        `;
+      },
+
+      checkVaultOption(selectedIdx) {
+        const m2 = this.state.m2;
+        const idx = m2.vaultStep;
+        const ch = m2.vaultChallenges[idx];
+
+        if (selectedIdx === ch.correctIdx) {
+          if (!m2.vaultSolved[idx]) {
+            m2.vaultSolved[idx] = true;
+            this.addXP(80);
+          }
+          const allSolved = m2.vaultSolved.every(Boolean);
+
+          if (!allSolved) {
+            this.showFeedback({
+              isSuccess: true,
+              title: `${ch.code} Terbuka! (+80 XP)`,
+              htmlBody: ch.explanation,
+              btnText: 'Lanjut ke Kode Berikutnya',
+              onConfirm: () => {
+                const nextIdx = m2.vaultSolved.findIndex(v => !v);
+                if (nextIdx !== -1) m2.vaultStep = nextIdx;
+                this.render();
+              }
+            });
+          } else {
+            this.state.completedMissions.m2 = true;
+            this.unlockBadge('sudutIstimewa');
+            this.showFeedback({
+              isSuccess: true,
+              title: 'Misi 2 Tuntas! Lencana Ahli Sudut Istimewa Diraih!',
+              htmlBody: `<p class="mb-2">${ch.explanation}</p><p class="font-bold text-emerald-700">Seluruh brankas berhasil dibuka! Kamu kini siap terjun ke proyek lapangan nyata di Nusantara.</p>`,
+              btnText: 'Terjun ke Misi 3 (Lapangan)',
+              onConfirm: () => this.selectMission('m3')
+            });
+          }
+        } else {
+          this.showFeedback({
+            isSuccess: false,
+            title: 'Kode Brankas Masih Terkunci',
+            htmlBody: `Jawabanmu belum sesuai dengan nilai eksak sudut istimewa. Coba buka <b>Buku Saku (Rumus & Konsep)</b> di pojok kanan atas untuk memeriksa kembali nilai <b>sin, cos, tan</b> untuk sudut <b>30°, 45°, dan 60°</b>, lalu identifikasi sisi mana yang diketahui dan ditanyakan!`,
+            btnText: 'Coba Lagi'
+          });
+        }
+      },
+
+      /* ==================== MISI 3: MISI LAPANGAN SURVEYOR ==================== */
+      renderMission3() {
+        const m3 = this.state.m3;
+        const solvedCount = m3.casesSolved.filter(Boolean).length;
+
+        const caseTabs = [
+          { title: 'Proyek 1: Jembatan Youtefa', icon: 'fa-bridge-water' },
+          { title: 'Proyek 2: Klinometer Jam Gadang', icon: 'fa-landmark' },
+          { title: 'Proyek 3: Detektif Kesalahan', icon: 'fa-magnifying-glass' }
+        ];
+
+        return `
+          <div class="space-y-5">
+            <!-- Header Navigasi -->
+            <div class="flex flex-wrap items-center justify-between gap-2 bg-white p-4 rounded-2xl border border-teal-100 shadow-sm">
+              <button onclick="app.goHome()" class="text-xs font-bold text-slate-500 hover:text-teal-600 flex items-center gap-1.5">
+                <i class="fa-solid fa-arrow-left"></i> Kembali ke Peta
+              </button>
+              <div class="flex items-center gap-2">
+                <span class="px-3 py-1 rounded-full bg-teal-100 text-teal-800 text-xs font-extrabold">Misi 3: Aplikasi Lapangan</span>
+                <span class="text-xs font-bold text-slate-500">${solvedCount}/3 Proyek Selesai</span>
+              </div>
+            </div>
+
+            <!-- Tab 3 Studi Kasus Kontekstual -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+              ${caseTabs.map((tab, i) => `
+                <button onclick="app.state.m3.activeCase = ${i}; app.render()"
+                  class="p-3.5 rounded-2xl border-2 text-left transition flex items-center justify-between ${m3.activeCase === i ? 'bg-teal-600 text-white border-teal-700 shadow-md' : 'bg-white text-slate-700 border-slate-200 hover:border-teal-300'}">
+                  <div class="flex items-center gap-2.5">
+                    <i class="fa-solid ${tab.icon}"></i>
+                    <span class="font-extrabold text-xs sm:text-sm">${tab.title}</span>
+                  </div>
+                  ${m3.casesSolved[i] ? '<i class="fa-solid fa-circle-check text-emerald-300"></i>' : ''}
+                </button>
+              `).join('')}
+            </div>
+
+            <!-- Konten Studi Kasus Aktif -->
+            ${m3.activeCase === 0 ? this.renderM3Case1() : m3.activeCase === 1 ? this.renderM3Case2() : this.renderM3Case3()}
+          </div>
+        `;
+      },
+
+      // STUDI KASUS 1: Mengukur Lebar Teluk/Sungai untuk Jembatan Youtefa (tan 31°)
+      renderM3Case1() {
+        const ratio = this.state.m3.case1RatioChoice;
+        return `
+          <div class="bg-white rounded-3xl p-5 sm:p-7 border border-slate-200 shadow-sm grid grid-cols-1 lg:grid-cols-12 gap-6">
+            <div class="lg:col-span-6 space-y-4">
+              <span class="px-3 py-1 rounded-full bg-sky-100 text-sky-700 text-[11px] font-extrabold">STUDI KASUS 1 • JAYAPURA, PAPUA</span>
+              <h3 class="font-extrabold text-xl text-slate-800">Mengukur Bentang Utama Jembatan Youtefa</h3>
+              <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                Tim surveyor ingin mengukur lebar perairan (<b>x</b>) dari titik <b>A</b> ke tiang pancang <b>B</b> di seberang tanpa menyeberang. Surveyor berjalan menyusuri tepi pantai lurus sejauh <b>400 meter</b> ke titik <b>C</b> (membentuk sudut siku-siku di A), lalu membidik titik B dengan teodolit dan memperoleh sudut <b>θ = 31°</b>.
+              </p>
+
+              <!-- Ilustrasi SVG Sungai & Teodolit -->
+              <div class="bg-sky-50 rounded-2xl p-3 border border-sky-200">
+                <svg viewBox="0 0 360 220" class="w-full h-auto">
+                  <!-- Air Teluk -->
+                  <rect x="20" y="35" width="320" height="115" rx="10" fill="#bae6fd" />
+                  <path d="M 40,75 Q 70,68 100,75 T 160,75 T 220,75 T 280,75" fill="none" stroke="#0284c7" stroke-width="1.5" opacity="0.5" />
+                  <path d="M 60,110 Q 90,103 120,110 T 180,110 T 240,110 T 300,110" fill="none" stroke="#0284c7" stroke-width="1.5" opacity="0.5" />
+                  
+                  <!-- Segitiga Pengukuran -->
+                  <polygon points="85,165 285,165 85,48" fill="rgba(251, 191, 36, 0.25)" stroke="#d97706" stroke-width="2.5" stroke-dasharray="6,4" />
+                  <!-- Siku-siku di A -->
+                  <polyline points="85,150 100,150 100,165" fill="none" stroke="#0f172a" stroke-width="2" />
+                  
+                  <!-- Titik A, B, C -->
+                  <circle cx="85" cy="165" r="5" fill="#0f172a" />
+                  <text x="72" y="182" font-weight="bold" font-size="12">A</text>
+
+                  <circle cx="85" cy="48" r="6" fill="#e11d48" />
+                  <text x="68" y="45" font-weight="bold" font-size="12" fill="#e11d48">B (Seberang)</text>
+
+                  <circle cx="285" cy="165" r="6" fill="#0284c7" />
+                  <text x="275" y="182" font-weight="bold" font-size="12" fill="#0284c7">C (Teodolit)</text>
+
+                  <!-- Label Sudut & Jarak -->
+                  <text x="235" y="157" font-weight="bold" font-size="12" fill="#b45309">θ = 31°</text>
+                  <text x="185" y="185" text-anchor="middle" font-weight="bold" font-size="12" fill="#0f172a">Jarak AC = 400 m</text>
+                  <text x="65" y="108" text-anchor="middle" font-weight="bold" font-size="13" fill="#e11d48">x = ?</text>
+                </svg>
+              </div>
+            </div>
+
+            <div class="lg:col-span-6 bg-slate-50 rounded-2xl p-5 border border-slate-200 flex flex-col justify-between space-y-4">
+              <div class="space-y-4">
+                <div>
+                  <label class="block text-xs font-extrabold text-slate-700 mb-2">Langkah 1: Pilih Perbandingan Trigonometri yang Tepat</label>
+                  <div class="grid grid-cols-3 gap-2">
+                    ${['sin 31°', 'cos 31°', 'tan 31°'].map(fn => `
+                      <button onclick="app.state.m3.case1RatioChoice = '${fn}'; app.render()"
+                        class="py-2.5 px-3 rounded-xl font-mono-math font-bold text-xs sm:text-sm border-2 transition ${ratio === fn ? 'bg-teal-600 text-white border-teal-700' : 'bg-white text-slate-700 border-slate-200 hover:border-teal-400'}">
+                        ${fn}
+                      </button>
+                    `).join('')}
+                  </div>
+                </div>
+
+                <div>
+                  <label class="block text-xs font-extrabold text-slate-700 mb-1">
+                    Langkah 2: Hitung Lebar Perairan (x) dalam Meter
+                  </label>
+                  <p class="text-[11px] text-slate-500 mb-2">
+                    Gunakan tombol <b>Kalkulator Trig</b> di bilah atas untuk mencari nilai rasio sudut <b>31°</b> (bulatkan hingga 1 angka di belakang koma, misal: 240.3).
+                  </p>
+                  <div class="flex items-center gap-2">
+                    <input type="number" id="m3-case1-input" step="0.1" placeholder="Contoh: 240.3"
+                      class="w-full px-4 py-3 rounded-xl border border-slate-300 font-mono-math font-bold text-base focus:outline-none focus:ring-2 focus:ring-teal-500" />
+                    <span class="font-bold text-slate-600 text-sm">meter</span>
+                  </div>
+                </div>
+              </div>
+
+              <button onclick="app.verifyM3Case1()" class="btn-game w-full py-3.5 rounded-xl bg-teal-600 hover:bg-teal-700 text-white font-extrabold text-sm">
+                <i class="fa-solid fa-paper-plane mr-1.5"></i> Kirim Laporan Pengukuran Jembatan
+              </button>
+            </div>
+          </div>
+        `;
+      },
+
+      verifyM3Case1() {
+        const ratio = this.state.m3.case1RatioChoice;
+        const val = parseFloat(document.getElementById('m3-case1-input').value);
+
+        if (!ratio) {
+          this.showFeedback({
+            isSuccess: false,
+            title: 'Pilih Perbandingan Trigonometri',
+            htmlBody: 'Tentukan terlebih dahulu apakah permasalahan ini menggunakan <b>sin 31°</b>, <b>cos 31°</b>, atau <b>tan 31°</b>.',
+            btnText: 'Kembali'
+          });
+          return;
+        }
+
+        if (ratio !== 'tan 31°') {
+          this.showFeedback({
+            isSuccess: false,
+            title: 'Miskonsepsi Pemilihan Rasio!',
+            htmlBody: `Kamu memilih <b>${ratio}</b>, padahal sisi miring (BC) tidak diketahui dan tidak ditanyakan! Dari sudut <b>31°</b> di titik C, lebar sungai <b>x</b> adalah <b>Sisi Depan</b> dan jarak pantai <b>400 m</b> adalah <b>Sisi Samping</b>. Rasio yang menghubungkan Depan dan Samping adalah <b>tan 31°</b>!`,
+            btnText: 'Perbaiki Pilihan'
+          });
+          return;
+        }
+
+        const expected = 400 * MathTrig.tan(31); // ~ 240.344
+        if (!isNaN(val) && Math.abs(val - expected) <= 1.0) {
+          if (!this.state.m3.casesSolved[0]) {
+            this.state.m3.casesSolved[0] = true;
+            this.addXP(110);
+          }
+          this.showFeedback({
+            isSuccess: true,
+            title: 'Proyek 1 Berhasil! (+110 XP)',
+            htmlBody: `Akurat sekali! Dengan <b>tan 31° = x / 400</b>, diperoleh <b>x = 400 × 0,6009 ≈ 240,3 meter</b>. Data bentang Jembatan Youtefa telah tercatat di sistem!`,
+            btnText: 'Lanjut ke Proyek 2 (Jam Gadang)',
+            onConfirm: () => {
+              this.state.m3.activeCase = 1;
+              this.render();
+            }
+          });
+        } else {
+          this.showFeedback({
+            isSuccess: false,
+            title: 'Hasil Perhitungan Belum Akurat',
+            htmlBody: `Rumusmu sudah benar (<b>x = 400 × tan 31°</b>). Buka <b>Kalkulator Trig</b> di bagian atas, masukkan sudut <b>31</b>, lalu kalikan nilai <b>tan(31°) ≈ 0,6009</b> dengan <b>400</b>.`,
+            btnText: 'Hitung Ulang'
+          });
+        }
+      },
+
+      // STUDI KASUS 2: Tinggi Jam Gadang Bukittinggi dengan Klinometer (Memperhitungkan Tinggi Pengamat)
+      renderM3Case2() {
+        return `
+          <div class="bg-white rounded-3xl p-5 sm:p-7 border border-slate-200 shadow-sm grid grid-cols-1 lg:grid-cols-12 gap-6">
+            <div class="lg:col-span-6 space-y-4">
+              <span class="px-3 py-1 rounded-full bg-amber-100 text-amber-800 text-[11px] font-extrabold">STUDI KASUS 2 • BUKITTINGGI, SUMATERA BARAT</span>
+              <h3 class="font-extrabold text-xl text-slate-800">Mengukur Tinggi Jam Gadang dengan Klinometer</h3>
+              <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                Surveyor berdiri sejauh <b>30 meter</b> dari dasar Jam Gadang. Tinggi mata surveyor dari tanah adalah <b>1,6 meter</b> (seperti kasus pengamatan Dimas di buku!). Melalui klinometer, sudut elevasi ke puncak atap Jam Gadang terbaca tepat <b>40°</b>.
+              </p>
+
+              <!-- Visual SVG Klinometer & Tinggi Mata Pengamat -->
+              <div class="bg-amber-50/60 rounded-2xl p-3 border border-amber-200">
+                <svg viewBox="0 0 360 220" class="w-full h-auto">
+                  <!-- Tanah -->
+                  <line x1="20" y1="195" x2="340" y2="195" stroke="#475569" stroke-width="3" />
+                  <!-- Menara Jam Gadang -->
+                  <rect x="255" y="38" width="42" height="157" fill="#cbd5e1" stroke="#334155" stroke-width="2" />
+                  <polygon points="248,38 276,16 304,38" fill="#b91c1c" />
+                  <circle cx="276" cy="62" r="10" fill="#ffffff" stroke="#0f172a" stroke-width="2" />
+                  
+                  <!-- Pengamat (Tinggi 1.6m) -->
+                  <line x1="75" y1="195" x2="75" y2="165" stroke="#0284c7" stroke-width="4" />
+                  <circle cx="75" cy="159" r="5" fill="#0284c7" />
+                  <text x="45" y="182" font-size="10" font-weight="bold" fill="#0284c7">1,6 m</text>
+
+                  <!-- Garis Pandang Horizontal & Elevasi -->
+                  <polygon points="75,159 255,159 255,16" fill="rgba(16, 185, 129, 0.18)" stroke="#059669" stroke-width="2" stroke-dasharray="5,3" />
+                  <text x="125" y="153" font-size="11" font-weight="bold" fill="#047857">θ = 40°</text>
+                  <text x="165" y="175" text-anchor="middle" font-size="11" font-weight="bold" fill="#0f172a">Jarak = 30 m</text>
+                  <text x="315" y="95" font-size="11" font-weight="bold" fill="#059669">y = ?</text>
+                  <text x="315" y="112" font-size="11" font-weight="bold" fill="#b91c1c">H = y + 1,6</text>
+                </svg>
+              </div>
+            </div>
+
+            <div class="lg:col-span-6 bg-slate-50 rounded-2xl p-5 border border-slate-200 flex flex-col justify-between space-y-4">
+              <div class="space-y-4">
+                <div class="p-3 rounded-xl bg-amber-100/80 border border-amber-300 text-xs text-amber-900">
+                  <b>Perhatian Teliti!</b> Segitiga siku-siku klinometer dimulai sejajar tinggi mata surveyor (<b>1,6 m</b>), bukan dari permukaan tanah!
+                </div>
+
+                <div>
+                  <label class="block text-xs font-extrabold text-slate-700 mb-1">
+                    1. Berapa tinggi bagian menara di atas garis mata (y = 30 × tan 40°)?
+                  </label>
+                  <input type="number" id="m3-case2-y" step="0.01" placeholder="Contoh: 25.17"
+                    class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 font-mono-math font-bold text-sm" />
+                </div>
+
+                <div>
+                  <label class="block text-xs font-extrabold text-slate-700 mb-1">
+                    2. Berapa Tinggi Total Jam Gadang dari permukaan tanah (H = y + 1,6 m)?
+                  </label>
+                  <input type="number" id="m3-case2-total" step="0.01" placeholder="Total tinggi dalam meter..."
+                    class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 font-mono-math font-bold text-sm" />
+                </div>
+              </div>
+
+              <button onclick="app.verifyM3Case2()" class="btn-game w-full py-3.5 rounded-xl bg-teal-600 hover:bg-teal-700 text-white font-extrabold text-sm">
+                <i class="fa-solid fa-check-circle mr-1.5"></i> Verifikasi Tinggi Jam Gadang
+              </button>
+            </div>
+          </div>
+        `;
+      },
+
+      verifyM3Case2() {
+        const yVal = parseFloat(document.getElementById('m3-case2-y').value);
+        const totalVal = parseFloat(document.getElementById('m3-case2-total').value);
+
+        const expectedY = 30 * MathTrig.tan(40); // ~ 25.173
+        const expectedTotal = expectedY + 1.6; // ~ 26.773
+
+        if (isNaN(yVal) || Math.abs(yVal - expectedY) > 0.3) {
+          this.showFeedback({
+            isSuccess: false,
+            title: 'Cek Kembali Nilai y',
+            htmlBody: `Gunakan <b>tan 40° = y / 30</b>. Buka <b>Kalkulator Trig</b> untuk sudut <b>40°</b>: nilai <b>tan(40°) ≈ 0,8391</b>, sehingga <b>y = 30 × 0,8391 ≈ 25,17 meter</b>.`,
+            btnText: 'Perbaiki'
+          });
+          return;
+        }
+
+        if (!isNaN(totalVal) && Math.abs(totalVal - expectedY) <= 0.3) {
+          this.showFeedback({
+            isSuccess: false,
+            title: 'Hampir Tepat! Lupa Menambahkan Tinggi Pengamat',
+            htmlBody: `Kamu menuliskan <b>${totalVal} m</b>, yang baru merupakan tinggi dari garis pandang mata! Jangan lupa menambahkan tinggi mata surveyor dari tanah sebesar <b>1,6 meter</b> (seperti kesalahan umum pada soal Dimas).`,
+            btnText: 'Tambahkan 1,6 m'
+          });
+          return;
+        }
+
+        if (!isNaN(totalVal) && Math.abs(totalVal - expectedTotal) <= 0.3) {
+          if (!this.state.m3.casesSolved[1]) {
+            this.state.m3.casesSolved[1] = true;
+            this.addXP(120);
+          }
+          this.showFeedback({
+            isSuccess: true,
+            title: 'Proyek 2 Berhasil! (+120 XP)',
+            htmlBody: `Sangat teliti! Tinggi dari garis mata adalah <b>25,17 m</b>, dan setelah ditambahkan tinggi mata surveyor <b>1,6 m</b>, diperoleh tinggi total Jam Gadang sebesar <b>26,77 meter</b> (sangat mendekati tinggi aslinya ~26–27 m!).`,
+            btnText: 'Lanjut ke Proyek 3 (Detektif Kesalahan)',
+            onConfirm: () => {
+              this.state.m3.activeCase = 2;
+              this.render();
+            }
+          });
+        } else {
+          this.showFeedback({
+            isSuccess: false,
+            title: 'Total Tinggi Belum Tepat',
+            htmlBody: `Jumlahkan nilai <b>y ≈ 25,17 m</b> dengan tinggi mata surveyor <b>1,6 m</b>.`,
+            btnText: 'Coba Lagi'
+          });
+        }
+      },
+
+      // STUDI KASUS 3: Detektif Kesalahan (Audit Kasus Layang-layang Wanimbo / Surya)
+      renderM3Case3() {
+        const selectedBug = this.state.m3.case3SelectedBug;
+        const steps = [
+          {
+            id: 1,
+            label: 'Langkah 1 (Identifikasi Sisi)',
+            text: 'Panjang benang layang-layang = 120 m merupakan Sisi Miring, dan ketinggian layang-layang (t) merupakan Sisi Depan sudut 60°.'
+          },
+          {
+            id: 2,
+            label: 'Langkah 2 (Pemilihan Rumus)',
+            text: 'Karena diketahui Miring dan ditanya Depan, siswa menuliskan: cos 60° = t / 120.'
+          },
+          {
+            id: 3,
+            label: 'Langkah 3 (Substitusi Sudut)',
+            text: 'Siswa memasukkan nilai perbandingan menjadi: 1/2 = t / 120, sehingga t = 60 meter.'
+          }
+        ];
+
+        return `
+          <div class="bg-white rounded-3xl p-5 sm:p-7 border border-slate-200 shadow-sm space-y-5">
+            <div class="border-b border-slate-100 pb-4">
+              <span class="px-3 py-1 rounded-full bg-rose-100 text-rose-700 text-[11px] font-extrabold">STUDI KASUS 3 • BERPIKIR KRITIS (AUDIT SURVEYOR)</span>
+              <h3 class="font-extrabold text-xl text-slate-800 mt-1">Detektif Kesalahan: Kasus Layang-Layang Wanimbo</h3>
+              <p class="text-xs sm:text-sm text-slate-600 mt-1">
+                Wanimbo menerbangkan layang-layang dengan panjang benang lurus <b>120 meter</b> dan sudut elevasi benang terhadap tanah sebesar <b>60°</b>. Seorang asisten muda mencoba menghitung ketinggian layang-layang (<b>t</b>), namun hasilnya keliru! <b>Temukan baris langkah yang mengandung miskonsepsi dan perbaiki jawabannya!</b>
+              </p>
+            </div>
+
+            <!-- Lembar Kerja Asisten yang Diaudit -->
+            <div class="space-y-2.5">
+              <p class="text-xs font-extrabold text-slate-500 uppercase">Klik Baris Langkah yang Salah:</p>
+              ${steps.map(st => `
+                <div onclick="app.state.m3.case3SelectedBug = ${st.id}; app.render()"
+                  class="cursor-pointer p-4 rounded-2xl border-2 transition flex items-start gap-3 ${selectedBug === st.id ? 'border-rose-500 bg-rose-50' : 'border-slate-200 hover:border-slate-300 bg-slate-50'}">
+                  <div class="w-7 h-7 rounded-lg flex-shrink-0 flex items-center justify-center font-bold text-xs ${selectedBug === st.id ? 'bg-rose-600 text-white' : 'bg-white border border-slate-300 text-slate-600'}">
+                    ${st.id}
+                  </div>
+                  <div>
+                    <div class="font-extrabold text-xs text-slate-800">${st.label}</div>
+                    <p class="text-xs sm:text-sm text-slate-700 font-mono-math mt-0.5">${st.text}</p>
+                  </div>
+                </div>
+              `).join('')}
+            </div>
+
+            <!-- Pilihan Perbaikan yang Benar -->
+            <div class="bg-indigo-50/70 rounded-2xl p-4 border border-indigo-200 space-y-3">
+              <label class="block text-xs font-extrabold text-indigo-900">
+                Pilih Perbaikan Perhitungan Tinggi Layang-Layang (t) yang Seharusnya:
+              </label>
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+                <button onclick="app.verifyM3Case3('60')" class="btn-game p-3 rounded-xl bg-white border border-indigo-200 hover:border-indigo-500 font-mono-math font-bold text-sm text-slate-800">
+                  t = 60 meter
+                </button>
+                <button onclick="app.verifyM3Case3('60sqrt3')" class="btn-game p-3 rounded-xl bg-white border border-indigo-200 hover:border-indigo-500 font-mono-math font-bold text-sm text-slate-800">
+                  t = 60√3 meter (≈ 103,9 m)
+                </button>
+                <button onclick="app.verifyM3Case3('120sqrt3')" class="btn-game p-3 rounded-xl bg-white border border-indigo-200 hover:border-indigo-500 font-mono-math font-bold text-sm text-slate-800">
+                  t = 120√3 meter (≈ 207,8 m)
+                </button>
+              </div>
+            </div>
+          </div>
+        `;
+      },
+
+      verifyM3Case3(answerChoice) {
+        const bug = this.state.m3.case3SelectedBug;
+        if (bug !== 2) {
+          this.showFeedback({
+            isSuccess: false,
+            title: 'Lokasi Kesalahan Belum Tepat',
+            htmlBody: `Coba periksa kembali <b>Langkah 2</b>: asisten tersebut sudah benar mengidentifikasi bahwa <b>t</b> adalah <b>Sisi Depan</b> dan benang <b>120 m</b> adalah <b>Sisi Miring</b>, namun ia justru menuliskan rumus <b>cos 60°</b> (Samping/Miring)! Seharusnya perbandingan Depan/Miring adalah <b>sin 60°</b>.`,
+            btnText: 'Pilih Langkah 2'
+          });
+          return;
+        }
+
+        if (answerChoice === '60sqrt3') {
+          if (!this.state.m3.casesSolved[2]) {
+            this.state.m3.casesSolved[2] = true;
+            this.addXP(120);
+          }
+          const allCasesDone = this.state.m3.casesSolved.every(Boolean);
+          if (allCasesDone) {
+            this.state.completedMissions.m3 = true;
+            this.unlockBadge('masterKlinometer');
+          }
+
+          this.showFeedback({
+            isSuccess: true,
+            title: allCasesDone ? 'Misi 3 Selesai! Lencana Master Klinometer Diraih!' : 'Audit Cerdas! (+120 XP)',
+            htmlBody: `<p class="mb-2">Analisis kritis yang luar biasa! Asisten tersebut tertukar antara <b>sin</b> dan <b>cos</b>.</p><p>Dengan rumus yang benar: <b>sin 60° = t / 120</b> → <b>t = 120 × (1/2 √3) = 60√3 meter</b> (atau sekitar <b>103,9 meter</b>).</p>`,
+            btnText: allCasesDone ? 'Lanjut ke Misi 4 (Refleksi & Sertifikat)' : 'Selesaikan Proyek Lainnya',
+            onConfirm: () => {
+              if (allCasesDone) {
+                this.selectMission('m4');
+              } else {
+                const next = this.state.m3.casesSolved.findIndex(v => !v);
+                if (next !== -1) this.state.m3.activeCase = next;
+                this.render();
+              }
+            }
+          });
+        } else {
+          this.showFeedback({
+            isSuccess: false,
+            title: 'Perhitungan Perbaikan Masih Keliru',
+            htmlBody: `Ingat bahwa nilai eksak <b>sin 60° = 1/2 √3</b>. Maka <b>t = 120 × (1/2 √3) = 60√3 meter</b>.`,
+            btnText: 'Coba Lagi'
+          });
+        }
+      },
+
+      /* ==================== MISI 4: JURNAL REFLEKSI & SERTIFIKAT ==================== */
+      renderMission4() {
+        const m4 = this.state.m4;
+        const checklistItems = [
+          'Saya dapat membedakan Sisi Depan, Sisi Samping, dan Sisi Miring berdasarkan posisi sudut referensi θ.',
+          'Saya memahami bahwa nilai perbandingan sin θ, cos θ, dan tan θ selalu tetap pada sudut yang sama meskipun ukuran segitiganya diperbesar atau diperkecil.',
+          'Saya mampu menentukan nilai eksak perbandingan trigonometri untuk sudut istimewa 30°, 45°, dan 60°.',
+          'Saya dapat menerapkan konsep trigonometri untuk memecahkan masalah pengukuran tinggi atau jarak dalam kehidupan nyata.'
+        ];
+
+        return `
+          <div class="space-y-6">
+            <!-- Header Navigasi -->
+            <div class="flex flex-wrap items-center justify-between gap-2 bg-white p-4 rounded-2xl border border-indigo-100 shadow-sm">
+              <button onclick="app.goHome()" class="text-xs font-bold text-slate-500 hover:text-indigo-600 flex items-center gap-1.5">
+                <i class="fa-solid fa-arrow-left"></i> Kembali ke Peta
+              </button>
+              <span class="px-3 py-1 rounded-full bg-indigo-100 text-indigo-800 text-xs font-extrabold">Misi 4: Fase Merefleksi & Sertifikasi</span>
+            </div>
+
+            ${!m4.certificateGenerated ? `
+              <div class="bg-white rounded-3xl p-5 sm:p-7 border border-slate-200 shadow-sm space-y-6">
+                <div>
+                  <span class="text-[11px] font-extrabold text-indigo-600 uppercase tracking-wider">Deep Learning • Fase Merefleksi (Mindful)</span>
+                  <h3 class="font-extrabold text-xl sm:text-2xl text-slate-800 mt-1">Debriefing Ekspedisi & Jurnal Pemahaman</h3>
+                  <p class="text-xs sm:text-sm text-slate-600 mt-1">
+                    Sebelum menerima <b>Sertifikat Surveyor Muda Nusantara</b>, luangkan waktu sejenak untuk merefleksikan konsep inti yang telah kamu temukan selama ekspedisi.
+                  </p>
+                </div>
+
+                <!-- 3 Pertanyaan Reflektif Terbuka -->
+                <div class="space-y-4">
+                  <div class="bg-sky-50/70 p-4 rounded-2xl border border-sky-100">
+                    <label class="block font-extrabold text-xs sm:text-sm text-slate-800 mb-1.5">
+                      1. Mengapa nilai <span class="font-mono-math text-rose-600">sin 30°</span> sama persis dengan <span class="font-mono-math text-teal-600">cos 60°</span> (keduanya bernilai 1/2)?
+                    </label>
+                    <textarea id="ref-q1" rows="2" placeholder="Tuliskan penalaranmu berdasarkan posisi sudut 30° dan 60° pada satu segitiga siku-siku..."
+                      class="w-full p-3 rounded-xl border border-slate-300 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">${m4.ref1}</textarea>
+                  </div>
+
+                  <div class="bg-amber-50/70 p-4 rounded-2xl border border-amber-100">
+                    <label class="block font-extrabold text-xs sm:text-sm text-slate-800 mb-1.5">
+                      2. Bagaimana hubungan antara <span class="font-mono-math text-indigo-600">tan θ</span> dengan <span class="font-mono-math text-rose-600">sin θ</span> dan <span class="font-mono-math text-teal-600">cos θ</span>?
+                    </label>
+                    <textarea id="ref-q2" rows="2" placeholder="Jelaskan mengapa tan θ = sin θ / cos θ..."
+                      class="w-full p-3 rounded-xl border border-slate-300 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">${m4.ref2}</textarea>
+                  </div>
+
+                  <div class="bg-emerald-50/70 p-4 rounded-2xl border border-emerald-100">
+                    <label class="block font-extrabold text-xs sm:text-sm text-slate-800 mb-1.5">
+                      3. Apa manfaat nyata perbandingan trigonometri yang paling berkesan bagimu setelah memainkan ekspedisi ini?
+                    </label>
+                    <textarea id="ref-q3" rows="2" placeholder="Tuliskan refleksi singkatmu..."
+                      class="w-full p-3 rounded-xl border border-slate-300 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">${m4.ref3}</textarea>
+                  </div>
+                </div>
+
+                <!-- Checklist Asesmen Diri -->
+                <div class="space-y-2.5">
+                  <h4 class="font-extrabold text-sm text-slate-800">Checklist Asesmen Diri (Centang kemampuan yang sudah kamu kuasai):</h4>
+                  ${checklistItems.map((item, idx) => `
+                    <label class="flex items-start gap-3 p-3 rounded-xl border border-slate-200 hover:bg-slate-50 cursor-pointer">
+                      <input type="checkbox" ${m4.checks[idx] ? 'checked' : ''} onchange="app.toggleM4Check(${idx}, this.checked)"
+                        class="mt-1 w-4 h-4 accent-indigo-600 rounded" />
+                      <span class="text-xs sm:text-sm text-slate-700">${item}</span>
+                    </label>
+                  `).join('')}
+                </div>
+
+                <button onclick="app.submitReflection()" class="btn-game w-full py-4 rounded-2xl bg-gradient-to-r from-indigo-600 to-sky-600 hover:from-indigo-700 hover:to-sky-700 text-white font-extrabold text-sm sm:text-base">
+                  <i class="fa-solid fa-award mr-2"></i> Selesaikan Refleksi & Terbitkan Sertifikat Surveyor
+                </button>
+              </div>
+            ` : this.renderCertificate()}
+          </div>
+        `;
+      },
+
+      toggleM4Check(idx, val) {
+        SoundFX.play('click');
+        this.state.m4.checks[idx] = val;
+      },
+
+      submitReflection() {
+        const r1 = document.getElementById('ref-q1').value.trim();
+        const r2 = document.getElementById('ref-q2').value.trim();
+        const r3 = document.getElementById('ref-q3').value.trim();
+
+        this.state.m4.ref1 = r1;
+        this.state.m4.ref2 = r2;
+        this.state.m4.ref3 = r3;
+
+        if (r1.length < 8 || r2.length < 8 || r3.length < 8) {
+          this.showFeedback({
+            isSuccess: false,
+            title: 'Jurnal Refleksi Belum Lengkap',
+            htmlBody: 'Tuliskan jawaban reflektifmu pada ketiga pertanyaan di atas dengan kalimat yang jelas agar rangkuman sertifikatmu bermakna.',
+            btnText: 'Lengkapi Jurnal'
+          });
+          return;
+        }
+
+        if (!this.state.completedMissions.m4) {
+          this.state.completedMissions.m4 = true;
+          this.addXP(200);
+          this.unlockBadge('arsitekReflektif');
+        }
+        this.state.m4.certificateGenerated = true;
+        SoundFX.play('badge');
+        this.render();
+      },
+
+      renderCertificate() {
+        const earnedBadges = Object.values(this.state.badges).filter(b => b.earned);
+        const selfScore = this.state.m4.checks.filter(Boolean).length;
+        const today = new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
+
+        return `
+          <div class="space-y-4">
+            <div id="certificate-card" class="certificate-border rounded-3xl p-6 sm:p-10 text-center relative overflow-hidden">
+              <!-- Dekorasi Sudut -->
+              <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-sky-500 to-indigo-600 text-white flex items-center justify-center text-3xl mx-auto mb-4 shadow-lg">
+                <i class="fa-solid fa-compass-drafting"></i>
+              </div>
+              <p class="text-xs font-extrabold tracking-widest text-sky-600 uppercase mb-1">Sertifikat Kelulusan Ekspedisi Matematika</p>
+              <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 mb-2">SURVEYOR MUDA NUSANTARA</h2>
+              <p class="text-xs sm:text-sm text-slate-500 mb-5">Diberikan dengan bangga kepada:</p>
+
+              <div class="inline-block border-b-2 border-slate-800 px-8 pb-1 mb-5">
+                <span class="text-2xl sm:text-3xl font-extrabold text-indigo-700">${this.state.playerName}</span>
+              </div>
+
+              <p class="max-w-2xl mx-auto text-xs sm:text-sm text-slate-600 leading-relaxed mb-6">
+                Telah berhasil menuntaskan seluruh rangkaian pembelajaran mendalam (<i>Mindful, Meaningful, Joyful</i>) pada materi <b>Bab 3: Perbandingan Trigonometri Kelas X SMA/SMK</b> melalui simulasi kalibrasi teodolit, eksplorasi kesebangunan sudut istimewa, serta pemecahan masalah pengukuran lapangan di Nusantara.
+              </p>
+
+              <!-- Ringkasan Statistik & Refleksi -->
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 max-w-2xl mx-auto mb-6 text-left">
+                <div class="bg-amber-50 border border-amber-200 rounded-2xl p-3.5 text-center">
+                  <div class="text-[11px] font-bold text-amber-700">Total Skor XP</div>
+                  <div class="text-xl font-extrabold text-amber-900">${this.state.xp} XP</div>
+                </div>
+                <div class="bg-emerald-50 border border-emerald-200 rounded-2xl p-3.5 text-center">
+                  <div class="text-[11px] font-bold text-emerald-700">Lencana Terkumpul</div>
+                  <div class="text-xl font-extrabold text-emerald-900">${earnedBadges.length} / 4</div>
+                </div>
+                <div class="bg-sky-50 border border-sky-200 rounded-2xl p-3.5 text-center">
+                  <div class="text-[11px] font-bold text-sky-700">Asesmen Diri</div>
+                  <div class="text-xl font-extrabold text-sky-900">${selfScore} / 4 Indikator</div>
+                </div>
+              </div>
+
+              <!-- Kutipan Refleksi Siswa -->
+              <div class="max-w-2xl mx-auto bg-slate-50 border border-slate-200 rounded-2xl p-4 text-left text-xs space-y-2 mb-6">
+                <div class="font-extrabold text-slate-800"><i class="fa-solid fa-quote-left text-indigo-500 mr-1.5"></i>Catatan Refleksi Surveyor:</div>
+                <p class="text-slate-600"><b>Relasi sin 30° & cos 60°:</b> ${this.state.m4.ref1}</p>
+                <p class="text-slate-600"><b>Konsep tan θ:</b> ${this.state.m4.ref2}</p>
+                <p class="text-slate-600"><b>Kebermaknaan:</b> ${this.state.m4.ref3}</p>
+              </div>
+
+              <div class="flex flex-wrap items-center justify-between max-w-2xl mx-auto text-xs text-slate-500 pt-4 border-t border-slate-200">
+                <span>Tanggal: <b>${today}</b></span>
+                <span>Kurikulum Merdeka • Matematika Kelas X</span>
+              </div>
+            </div>
+
+            <div class="flex flex-wrap justify-center gap-3">
+              <button id="btn-send-gsheet" onclick="app.sendToGoogleSheets()" class="btn-game px-5 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-xs sm:text-sm">
+                <i class="fa-solid fa-cloud-arrow-up mr-1.5"></i> Kirim Nilai ke Guru (Google Sheets)
+              </button>
+              <button onclick="app.copyCertificateSummary()" class="btn-game px-5 py-3 rounded-xl bg-sky-600 hover:bg-sky-700 text-white font-extrabold text-xs sm:text-sm">
+                <i class="fa-solid fa-copy mr-1.5"></i> Salin Ringkasan Laporan
+              </button>
+              <button onclick="app.state.m4.certificateGenerated = false; app.render()" class="px-5 py-3 rounded-xl bg-white border border-slate-300 hover:bg-slate-50 text-slate-700 font-bold text-xs sm:text-sm">
+                <i class="fa-solid fa-pen-to-square mr-1.5"></i> Edit Refleksi
+              </button>
+            </div>
+          </div>
+        `;
+      },
+
+      async sendToGoogleSheets() {
+        if (!this.APPS_SCRIPT_URL || this.APPS_SCRIPT_URL.includes('PASTE_URL')) {
+          this.showFeedback({
+            isSuccess: false,
+            title: 'URL Apps Script Belum Dipasang',
+            htmlBody: 'Guru/Admin belum memasukkan URL Web App Google Apps Script pada variabel <code>APPS_SCRIPT_URL</code> di dalam kode game.',
+            btnText: 'Mengerti'
+          });
+          return;
+        }
+
+        const btn = document.getElementById('btn-send-gsheet');
+        const originalHTML = btn.innerHTML;
+        btn.disabled = true;
+        btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-1.5"></i> Mengirim Data...';
+
+        const earnedBadges = Object.values(this.state.badges).filter(b => b.earned).length;
+        const selfScore = this.state.m4.checks.filter(Boolean).length;
+        const completedCount = Object.values(this.state.completedMissions).filter(Boolean).length;
+
+        const payload = {
+          nama: this.state.playerName,
+          xp: this.state.xp,
+          lencana: `${earnedBadges}/4`,
+          asesmenDiri: `${selfScore}/4`,
+          misiSelesai: `${completedCount}/4`,
+          ref1: this.state.m4.ref1,
+          ref2: this.state.m4.ref2,
+          ref3: this.state.m4.ref3
+        };
+
+        try {
+          // Menggunakan mode 'no-cors' dan 'text/plain' agar bebas dari blokir preflight CORS browser
+          await fetch(this.APPS_SCRIPT_URL, {
+            method: 'POST',
+            mode: 'no-cors',
+            headers: {
+              'Content-Type': 'text/plain;charset=utf-8'
+            },
+            body: JSON.stringify(payload)
+          });
+
+          btn.innerHTML = '<i class="fa-solid fa-circle-check mr-1.5"></i> Terkirim ke Google Sheets';
+          btn.classList.replace('bg-emerald-600', 'bg-slate-600');
+
+          this.showFeedback({
+            isSuccess: true,
+            title: 'Laporan Nilai Berhasil Terkirim!',
+            htmlBody: `Data pencapaian atas nama <b>${this.state.playerName}</b> (<b>${this.state.xp} XP</b>, Lencana <b>${earnedBadges}/4</b>, serta catatan refleksi) telah tercatat secara otomatis di Google Sheets Bapak/Ibu Guru.`,
+            btnText: 'Mantap!'
+          });
+        } catch (error) {
+          btn.disabled = false;
+          btn.innerHTML = originalHTML;
+          this.showFeedback({
+            isSuccess: false,
+            title: 'Gagal Mengirim Data',
+            htmlBody: 'Terjadi gangguan koneksi internet saat mengirim data. Silakan periksa jaringanmu atau gunakan tombol <b>Salin Ringkasan Laporan</b> sebagai cadangan.',
+            btnText: 'Coba Lagi'
+          });
+        }
+      },
+
+      copyCertificateSummary() {
+        const text = `LAPORAN EKSPEDISI TRIGONOMETRI - ARSITEK & SURVEYOR NUSANTARA\nNama: ${this.state.playerName}\nTotal XP: ${this.state.xp} XP\nRefleksi 1 (sin 30° = cos 60°): ${this.state.m4.ref1}\nRefleksi 2 (Hubungan tan θ): ${this.state.m4.ref2}\nRefleksi 3 (Manfaat Nyata): ${this.state.m4.ref3}`;
+        const textarea = document.createElement('textarea');
+        textarea.value = text;
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textarea);
+
+        this.showFeedback({
+          isSuccess: true,
+          title: 'Laporan Berhasil Disalin!',
+          htmlBody: 'Ringkasan sertifikat dan jurnal refleksimu telah disalin ke papan klip (<i>clipboard</i>). Kamu dapat langsung menempelkannya (<i>Paste</i>) ke Google Classroom, WhatsApp, atau dokumen tugas gurumu.',
+          btnText: 'Selesai'
+        });
+      }
+    };
+
+    // Jalankan aplikasi setelah seluruh halaman dimuat
+    window.onload = function () {
+      app.init();
+    };
+  </script>
+</body>
+</html>
